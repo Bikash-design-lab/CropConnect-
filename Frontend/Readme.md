@@ -1,0 +1,1 @@
+# CropConnect Frontend/Client side
