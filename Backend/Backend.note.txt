@@ -1,0 +1,224 @@
+user:- 
+[
+  {
+    "name": "Rajesh Kumar",
+    "email": "rajesh.kumar@example.com",
+    "password": "pass1234",
+    "role": "farmer"
+  },
+  {
+    "name": "Anita Sharma",
+    "email": "anita.sharma@example.com",
+    "password": "buyerpwd",
+    "role": "buyer"
+  },
+  {
+    "name": "Mohit Verma",
+    "email": "mohit.verma@example.com",
+    "password": "adminpass",
+    "role": "admin"
+  },
+  {
+    "name": "Pooja Yadav",
+    "email": "pooja.yadav@example.com",
+    "password": "farm1234",
+    "role": "farmer"
+  },
+  {
+    "name": "Suresh Patel",
+    "email": "suresh.patel@example.com",
+    "password": "buy4567",
+    "role": "buyer"
+  }
+]
+
+register as  buyer:- 
+[
+  {
+    "userId": "USER_OBJECT_ID_1",
+    "phone": "9876543210",
+    "address": "123 Green Market Street",
+    "preferences": ["Organic", "Local"],
+    "location": {
+      "city": "Lucknow",
+      "state": "Uttar Pradesh",
+      "coordinates": {
+        "type": "Point",
+        "coordinates": [80.9462, 26.8467] // lng, lat
+      }
+    }
+  },
+  {
+    "userId": "USER_OBJECT_ID_2",
+    "phone": "9123456780",
+    "address": "45 Central Road",
+    "preferences": ["Imported", "Dried"],
+    "location": {
+      "city": "Pune",
+      "state": "Maharashtra",
+      "coordinates": {
+        "type": "Point",
+        "coordinates": [73.8567, 18.5204]
+      }
+    }
+  }
+]
+
+register as farmer:- 
+[
+  {
+    "userId": "USER_OBJECT_ID_1",
+    "phone": 9876543210,
+    "location": {
+      "city": "Varanasi",
+      "state": "Uttar Pradesh",
+      "pin": "221001",
+      "coordinates": {
+        "type": "Point",
+        "coordinates": [83.0095, 25.3176]  // [lng, lat]
+      }
+    },
+    "farmSize": 5,
+    "isCertifiedSustainable": true,
+    "certificationDetails": {
+      "authority": "National Organic Certification",
+      "certifiedOn": "2023-07-15",
+      "documents": ["doc1.pdf", "doc2.pdf"]
+    }
+  },
+  {
+    "userId": "USER_OBJECT_ID_2",
+    "phone": 9123456780,
+    "location": {
+      "city": "Indore",
+      "state": "Madhya Pradesh",
+      "pin": "452001",
+      "coordinates": {
+        "type": "Point",
+        "coordinates": [75.8577, 22.7196]
+      }
+    },
+    "farmSize": 12,
+    "isCertifiedSustainable": false,
+    "certificationDetails": {
+      "authority": "",
+      "certifiedOn": null,
+      "documents": []
+    }
+  }
+]
+
+add product as role= farmer
+[
+  {
+    "farmerId": "FARMER_PROFILE_ID_1",
+    "name": "Red Apple",
+    "variety": "Fuji",
+    "description": "Fresh and juicy Fuji apples, handpicked from our organic farm.",
+    "category": "fruit",
+    "pricePerUnit": 120,
+    "unit": "kg",
+    "quantityAvailable": 100,
+    "images": ["https://example.com/images/apple1.jpg", "https://example.com/images/apple2.jpg"],
+    "isOrganic": true,
+    "isCertified": true,
+    "certificationDetails": {
+      "authority": "Organic Farm Board",
+      "certificateNumber": "ORG123456",
+      "certifiedOn": "2023-01-15"
+    },
+    "harvestDate": "2023-04-01",
+    "expiryDate": "2023-05-10",
+    "location": {
+      "city": "Shimla",
+      "state": "Himachal Pradesh",
+      "pin": "171001",
+      "coordinates": {
+        "type": "Point",
+        "coordinates": [77.1734, 31.1048]
+      }
+    },
+    "deliveryAvailable": true,
+    "deliveryRadiusKm": 50,
+    "status": "available",
+    "ratings": [
+      {
+        "userId": "USER_ID_1",
+        "rating": 5,
+        "review": "Best apples I've ever had!",
+        "createdAt": "2023-04-10"
+      },
+      {
+        "userId": "USER_ID_2",
+        "rating": 4,
+        "review": "Very fresh, will buy again.",
+        "createdAt": "2023-04-15"
+      }
+    ]
+  },
+  {
+    "farmerId": "FARMER_PROFILE_ID_2",
+    "name": "Basmati Rice",
+    "description": "Premium quality basmati rice with long grains and aromatic flavor.",
+    "category": "grain",
+    "pricePerUnit": 90,
+    "unit": "kg",
+    "quantityAvailable": 500,
+    "images": [],
+    "isOrganic": false,
+    "isCertified": false,
+    "harvestDate": "2023-03-20",
+    "expiryDate": "2024-03-20",
+    "location": {
+      "city": "Amritsar",
+      "state": "Punjab",
+      "pin": "143001",
+      "coordinates": {
+        "type": "Point",
+        "coordinates": [74.8723, 31.6340]
+      }
+    },
+    "deliveryAvailable": false,
+    "deliveryRadiusKm": 0,
+    "status": "available",
+    "ratings": []
+  }
+]
+
+order product:-
+[
+  {
+    "buyerId": "BUYER_PROFILE_ID_1",
+    "farmerId": "FARMER_PROFILE_ID_1",
+    "productId": "PRODUCT_ID_1",
+    "quantity": 5,
+    "unit": "kg",
+    "pricePerUnit": 120,
+    "totalPrice": 600,
+    "status": "pending",
+    "deliveryAddress": {
+      "street": "123 Green Market Street",
+      "city": "Lucknow",
+      "state": "Uttar Pradesh",
+      "pin": "226001"
+    },
+    "paymentStatus": "pending"
+  },
+  {
+    "buyerId": "BUYER_PROFILE_ID_2",
+    "farmerId": "FARMER_PROFILE_ID_2",
+    "productId": "PRODUCT_ID_2",
+    "quantity": 10,
+    "unit": "kg",
+    "pricePerUnit": 90,
+    "totalPrice": 900,
+    "status": "confirmed",
+    "deliveryAddress": {
+      "street": "45 Central Road",
+      "city": "Pune",
+      "state": "Maharashtra",
+      "pin": "411001"
+    },
+    "paymentStatus": "paid"
+  }
+]
