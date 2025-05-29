@@ -13,6 +13,9 @@ const BuyerProfileSchema = new mongoose.Schema({
       coordinates: [Number],
     },
   },
+}, {
+  versionKey: false,
+  timestamps: true,
 });
 
 BuyerProfileSchema.index({ "location.coordinates": "2dsphere" });

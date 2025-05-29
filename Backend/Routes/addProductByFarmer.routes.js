@@ -26,6 +26,26 @@ addProductByFarmerRoute.post("/add-productByFarmer", Authentication(["farmer"]),
         if (!farmer) {
             return res.status(404).json({ message: "Farmer not found. Please make sure you are logged in as a registered farmer.", });
         }
+
+        // Check for duplicate product
+        // Normalize input values
+        const { name, harvestDate } = req.body;
+        const normalizedName = name.trim().toLowerCase();
+        const normalizedHarvestDate = new Date(harvestDate);
+
+        // Check for duplicate product by same farmer
+        const isDuplicate = await AddProductByFarmerModel.findOne({
+            farmerId: userId,
+            name: { $regex: new RegExp(`^${normalizedName}$`, 'i') }, // case-insensitive
+            harvestDate: normalizedHarvestDate,
+        });
+
+        if (isDuplicate) {
+            return res.status(409).json({
+                message: "Duplicate entry detected. This product is already listed by you.",
+            });
+        }
+
         const newProduct = await AddProductByFarmerModel.create({ farmerId: userId, ...req.body, });
         return res.status(201).json({ message: "Product successfully listed on the platform.", newProduct });
 

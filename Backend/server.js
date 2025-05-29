@@ -12,7 +12,7 @@ const { ConnectToDB } = require("./Config/db");
 const rateLimit = require("express-rate-limit");
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 5 * 60 * 1000, // 5 minutes
   max: 25, // Limit each IP to 25 requests per windowMs
   standardHeaders: 'draft-8',
   legacyHeaders: false,

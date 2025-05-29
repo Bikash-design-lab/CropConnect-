@@ -1,4 +1,7 @@
 const jwt = require("jsonwebtoken")
+
+const { BlacklistedTokenModel } = require("../Models/blacklistedToken.model")
+
 const Authentication = (roles) => {
     return async (req, res, next) => {
         try {
@@ -6,6 +9,10 @@ const Authentication = (roles) => {
             const token = await req.headers?.authorization?.split(" ")[1]
             if (!token) {
                 return res.status(404).json({ message: "Token not found." })
+            }
+            const isBlackListedTokn = await BlacklistedTokenModel.findOne({ token })
+            if (isBlackListedTokn) {
+                return res.status(401).json({ message: "It's BlackListed Token, Please Login again." })
             }
             const decoded = jwt.verify(token, process.env.SECURED_KEY)
             if (!decoded) {

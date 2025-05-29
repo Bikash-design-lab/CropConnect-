@@ -2,6 +2,9 @@ const express = require("express");
 
 const farmerProfileRouter = express.Router();
 
+const nodemailer = require("nodemailer");
+require("dotenv").config()
+
 const { FarmerProfileModel } = require("../Models/farmerProfile.model");
 const { UserModel } = require("../Models/user.model");
 
@@ -20,7 +23,57 @@ farmerProfileRouter.post("/add-farmerProfile", Authentication(["farmer"]), async
         if (user.role != role || role != "farmer") {
             return res.status(404).json({ message: `Only users with the 'farmer' role can create a farmer profile.` })
         }
+        // restrict from duplicate profile creation
+        const isAlreadyCreatedProfile = await FarmerProfileModel.findOne({ userId: userID })
+        if (isAlreadyCreatedProfile) {
+            return res.status(409).json({ message: "Profile already exists. Duplicate profile creation is not allowed." });
+        }
         const createFarmerProfile = await FarmerProfileModel.create({ userId: userID, ...req.body })
+        // Implement NodeMailer so, that for every new order_buyer receive an Email, for confirmation of order
+        const transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 587,
+            secure: false, // true for 465, false for other ports
+            auth: {
+                user: process.env.GOOGLE_EMAIL,
+                pass: process.env.GOOGLE_PASSWORD,
+            },
+        });
+
+        await transporter.sendMail({
+            from: '"Mr. Bikash Prasad Barnwal" <Bikash@crop.connect.com>',
+            to: user.email,
+            subject: "✔ You have created a profile on CropConnect.",
+            html: `
+                <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9;">
+                    <div style="max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <h2 style="color: #28a745;">🎉 Welcome to CropConnect!</h2>
+                    <p style="font-size: 16px;">Hello <b>${user.name}</b>,</p>
+                    <p style="font-size: 15px;">Your profile has been successfully created on <strong>CropConnect</strong>.</p>
+
+                    <hr style="margin: 20px 0;" />
+
+                    <h3 style="color: #333;">📄 Profile Details</h3>
+                    <p><b>🧑 Role:</b> Farmer</p>
+                    <p><b>🆔 Unique(Farmer) Profile ID:</b> ${createFarmerProfile._id}</p>
+                    <p><b>📞 Phone:</b> ${createFarmerProfile.phone}</p>
+                    <p><b>🏠 Address:</b> ${createFarmerProfile.location?.city || 'N/A'}</p>
+                    <p><b>📍 State:</b> ${createFarmerProfile.location?.state || 'N/A'}</p>
+                    <p><b>🗓️ Profile Created At:</b> ${createFarmerProfile.createdAt}</p>
+                    <hr style="margin: 20px 0;" />
+                    <p style="font-size: 15px;">
+                        We're excited to support your journey in agricultural trading. If you ever need help, don't hesitate to reach out.  
+                        <br><br>
+                        🌾 Thank you for choosing <strong>CropConnect</strong> — where farming meets technology!
+                    </p>
+
+                    <p style="margin-top: 30px; font-size: 14px; color: #888;">— Team CropConnect</p>
+                </div>
+                </div>
+            `
+
+        });
+
         return res.status(200).json({ message: `Hi ${user.name}, your farmer profile has been created successfully!`, createFarmerProfile })
     } catch (error) {
         console.log(error)

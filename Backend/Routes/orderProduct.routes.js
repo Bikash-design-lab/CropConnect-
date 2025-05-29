@@ -1,5 +1,8 @@
 const express = require("express");
 
+const nodemailer = require("nodemailer");
+require("dotenv").config()
+
 const orderProductRoute = express.Router();
 
 const { BuyerProfileModel } = require("../Models/buyerProfile.model");
@@ -50,7 +53,63 @@ orderProductRoute.post("/orderProduct", Authentication(["buyer", "admin"]), asyn
 
         const buyProduct = await OrderProductModel.create({ buyerId, farmerId, productId, ...req.body, });
 
-        return res.status(200).json({ message: "Your order has been successfully placed.", buyProduct, });
+        // getting product details
+        const getProductDetail = await AddProductByFarmerModel.findById(productId).lean()
+        // getting farmer detail
+        const getFarmerDetail = await FarmerProfileModel.findById(farmerId)
+        // trying to access the farmer detail:- so that we can notify via mail to the farmer also that buyer wants to buy roduct
+        const getFarmerEmail = await UserModel.findById(getFarmerDetail.userId)
+        // console.log("Farmer details try to access from orderProduct endpoint line 62 code:", getFarmerEmail)
+        // Implement NodeMailer so, that for every new order_buyer receive an Email, for confirmation of order
+        const transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 587,
+            secure: false, // true for 465, false for other ports
+            auth: {
+                user: process.env.GOOGLE_EMAIL,
+                pass: process.env.GOOGLE_PASSWORD,
+            },
+        });
+
+        await transporter.sendMail({
+            from: '"Mr. Bikash Prasad Barnwal" <Bikash@crop.connect.com>',
+            to: [user.email, getFarmerEmail.email],
+            subject: "✔ Your recent order confirmation.",
+            html: `
+            <div style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
+                <div style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 8px; padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                <h2 style="color: #4CAF50;">🌿 CropConnect Order Confirmation</h2>
+                <p style="font-size: 16px;">You placed an order for <strong>${getProductDetail.name}</strong> of variety <strong>${getProductDetail.variety || "High Quality variety"}</strong>.</p>
+                <p style="font-size: 15px;">📝 <strong>Description:</strong> ${getFarmerDetail.description || "Fresh from fields"}</p>
+                <hr style="margin: 20px 0;" />
+                <p style="font-size: 15px;"><strong>🆔 Order ID:</strong> ${buyProduct._id}</p>
+                <p style="font-size: 15px;"><strong>📦 Quantity:</strong> ${buyProduct.quantity} ${buyProduct.unit}</p>
+                <p style="font-size: 15px;"><strong>🏷 Price per Unit:</strong> ₹${buyProduct.pricePerUnit}/-</p>
+                <p style="font-size: 15px;"><strong>💰 Total Price:</strong> ₹${buyProduct.totalPrice}/-</p>
+                <p style="font-size: 15px;"><strong>💳 Payment Status:</strong> ${buyProduct.paymentStatus}</p>
+                <p style="font-size: 15px;"><strong>📅 Order Date:</strong> ${buyProduct.createdAt}</p>
+                <h3 style="margin-top: 30px; color: #4CAF50;">🚚 Delivery Address</h3>
+                <p style="font-size: 15px;"><strong>📍 Landmark:</strong> ${buyProduct.deliveryAddress.street}</p>
+                <p style="font-size: 15px;"><strong>🏙 City:</strong> ${buyProduct.deliveryAddress.city}</p>
+                <p style="font-size: 15px;"><strong>🗺 State:</strong> ${buyProduct.deliveryAddress.state}</p>
+                <p style="font-size: 15px;"><strong>📮 PinCode:</strong> ${buyProduct.deliveryAddress.pin}</p>
+                <div style="margin-top: 30px; font-size: 15px;">
+                <hr style="margin: 20px 0;" />
+                <p style="font-size: 15px;">
+                    We're excited to support your journey in agricultural trading. If you ever need help, don't hesitate to reach out.  
+                    <br><br>
+                    🌾 Thank you for choosing <strong>CropConnect</strong> — where farming meets technology!
+                </p>
+
+                <p style="margin-top: 30px; font-size: 14px; color: #888;">— Team CropConnect</p>
+                </div>
+                </div>
+
+            </div>
+            `
+        });
+
+        return res.status(200).json({ message: "Your order has been successfully placed and details send via mail.", buyProduct, });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "An unexpected error occurred while placing the order.", error });

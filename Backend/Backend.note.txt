@@ -223,3 +223,29 @@ order product:-
     "paymentStatus": "paid"
   }
 ]
+
+
+// sample order product data
+{
+    "message": "Your order has been successfully placed and details send via mail.",
+    "buyProduct": {
+        "buyerId": "68376d3d02228516a4370478",
+        "farmerId": "68377999694ebc2c023f98fc",
+        "productId": "68380a606b24a018120bd64a",
+        "quantity": 50,
+        "unit": "kg",
+        "pricePerUnit": 40,
+        "totalPrice": 2000,
+        "status": "pending",
+        "deliveryAddress": {
+            "street": "JL Road, Near Green Park",
+            "city": "Hydrabad",
+            "state": "Andhra Pradesh",
+            "pin": "196001"
+        },
+        "paymentStatus": "pending",
+        "_id": "683852058c2e82f4ee7c08be",
+        "createdAt": "2025-05-29T12:24:37.619Z",
+        "updatedAt": "2025-05-29T12:24:37.619Z"
+    }
+}
