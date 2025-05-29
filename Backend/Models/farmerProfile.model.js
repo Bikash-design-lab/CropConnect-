@@ -7,7 +7,7 @@ const FarmerProfileSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    phone: { type: Number, max: 10, min: 10 },
+    phone: { type: Number },
     location: {
       city: String,
       state: String,

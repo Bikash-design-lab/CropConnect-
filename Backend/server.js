@@ -9,6 +9,16 @@ const PORT = 8080 || process.env.PORT;
 // calling ConnectToDB fuction database
 const { ConnectToDB } = require("./Config/db");
 
+const rateLimit = require("express-rate-limit");
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 25, // Limit each IP to 25 requests per windowMs
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
+});
+
+
 // different endpoint routes
 const { userRoute } = require("./Routes/user.routes");
 const { farmerProfileRouter } = require("./Routes/farmerProfile.routes");
@@ -19,6 +29,7 @@ const { addProductByFarmerRoute } = require("./Routes/addProductByFarmer.routes"
 // Middlewares -> JSON to parse data
 app.use(express.json());
 app.use(cors())
+app.use(limiter)
 
 app.get("/test", (req, res) => {
   res.json({ message: "This is test endpoint." });
