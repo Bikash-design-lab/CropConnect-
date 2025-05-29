@@ -34,7 +34,7 @@ userRoute.post("/signin", async (req, res) => {
       return res.status(409).json({ message: "No account found with this email. Please sign up first." })
     }
     const token = jwt.sign({ userID: user._id, role: user.role }, process.env.SECURED_KEY)
-    return res.status(200).json({ message: "Signin successful! Welcome back.", token })
+    return res.status(200).json({ message: "Signin successful! Welcome back.", user, token })
   } catch (error) {
     console.log(error)
     return res.status(500).json({ message: "An unexpected error occurred. Please try again later.", error })

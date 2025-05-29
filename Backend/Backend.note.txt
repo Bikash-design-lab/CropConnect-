@@ -185,6 +185,7 @@ add product as role= farmer
   }
 ]
 
+// http://localhost:8080/orderProduct/orderProduct?buyerId=68376d3d02228516a4370478&farmerId=68377999694ebc2c023f98fc&productId=683809ed6b24a018120bd644
 order product:-
 [
   {

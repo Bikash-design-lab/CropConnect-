@@ -17,7 +17,7 @@ orderProductRoute.get("/home", (req, res) => {
     res.json({ message: "This is home endpoint route from OrderProduct" });
 });
 
-// Place order for a product
+// Place order for a  order_product endpoint
 // Endpoint: /orderProduct?buyerId=buyerId&farmerId=farmerId&productId=productId
 orderProductRoute.post("/orderProduct", Authentication(["buyer", "admin"]), async (req, res) => {
     try {
@@ -48,7 +48,7 @@ orderProductRoute.post("/orderProduct", Authentication(["buyer", "admin"]), asyn
             });
         }
 
-        const buyProduct = await OrderProductModel.create({ buyerId: userID, farmerId, productId, ...req.body, });
+        const buyProduct = await OrderProductModel.create({ buyerId, farmerId, productId, ...req.body, });
 
         return res.status(200).json({ message: "Your order has been successfully placed.", buyProduct, });
     } catch (error) {
@@ -57,7 +57,7 @@ orderProductRoute.post("/orderProduct", Authentication(["buyer", "admin"]), asyn
     }
 });
 
-// Updae order for a product
+// Update order for a order_product endpoint
 // Endpoint: /updateProduct?orderId=_id
 orderProductRoute.patch("/updateProduct", Authentication(["buyer", "admin"]), async (req, res) => {
     try {
@@ -87,12 +87,84 @@ orderProductRoute.patch("/updateProduct", Authentication(["buyer", "admin"]), as
             });
         }
 
-        const orderedProduct = await OrderProductModel.findOneAndUpdate(orderId, { ...req.body }, { new: true });
+        const orderedProduct = await OrderProductModel.findOneAndUpdate({ _id: orderId }, { ...req.body }, { new: true });
 
         return res.status(200).json({ message: "Your order has been updated successfully.", orderedProduct, });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "An unexpected error occurred while placing the order.", error });
+    }
+});
+
+
+// delete order for a  order_product endpoint
+// Endpoint: /cancelOrder?orderId=_id
+orderProductRoute.delete("/cancelOrder", Authentication(["buyer", "admin"]), async (req, res) => {
+    try {
+        const userID = req.userID;
+        const role = req.role;
+        const { orderId } = req.query;
+
+        if (!orderId) {
+            return res.status(400).json({ message: "Missing required parameter: orderId." });
+        }
+
+        const user = await UserModel.findById(userID);
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        if (role !== "buyer" && role !== "admin") {
+            return res.status(403).json({
+                message: "Access denied: Only users with 'buyer' or 'admin' roles can update an order.",
+            });
+        }
+
+        const isOrderExists = await OrderProductModel.findById(orderId);
+        if (!isOrderExists) {
+            return res.status(404).json({
+                message: `Hello ${user.role.toUpperCase()} ${user.name}, the Order with ID '${orderId}' is no longer available on the platform.`,
+            });
+        }
+
+        const orderedProduct = await OrderProductModel.findOneAndUpdate({ _id: orderId });
+
+        return res.status(200).json({ message: `Hello ${user.role.toUpperCase()} ${user.name}, the Order with ID '${orderId}' is cancelled sucssfully. `, orderedProduct, });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "An unexpected error occurred while placing the order.", error });
+    }
+});
+
+
+// get order for a  order_product endpoint
+// Endpoint: /getOrderedProduct
+orderProductRoute.get("/getOrderedProduct", Authentication(["buyer", "admin"]), async (req, res) => {
+    try {
+        const userID = req.userID;
+        const role = req.role;
+
+        const user = await UserModel.findById(userID);
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        if (role !== "buyer" && role !== "admin") {
+            return res.status(403).json({
+                message: "Access denied: Only users with 'buyer' or 'admin' roles can update an order.",
+            });
+        }
+
+        const orderedProduct = await OrderProductModel.find();
+        if (orderedProduct.length == 0) {
+            return res.status(200).json({
+                message: `Hello ${user.role.toUpperCase()} ${user.name}, your haven't place any order.`,
+            });
+        }
+        return res.status(200).json({ message: "Your ordered product lists.", orderedProduct, });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "An unexpected error occurred while getting the ordered product list.", error });
     }
 });
 
