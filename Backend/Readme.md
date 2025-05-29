@@ -1,5 +1,9 @@
 # CropConnect Backend/Server side
-
+## Backend Deployed on RENDER
+### BASE URL
+```
+https://cropconnect-un44.onrender.com
+```
 Step 1 -> User registration (UserModel)
 
 Step 2 -> Profile creation based on role (BuyerProfile, FarmerProfile)
