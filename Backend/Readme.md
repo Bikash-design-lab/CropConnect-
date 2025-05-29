@@ -101,7 +101,9 @@ http://localhost:8080
 |--------|-----------|-----------------------------------|
 | POST   | `/signup` | Register a new user account       |
 | POST   | `/signin` | Authenticate user and return JWT  |
-
+| POST   | `/logout` | User logout from platform         |
+| POST   | `/forgetPassword/?token= createdToken` | user received password reset link via mail|
+| POST   | `/resetPassword` | Follow the same link to reset password |
 ---
 
 ### Farmer_Profile Creation Routes (`/farmerProfile`)
@@ -161,6 +163,7 @@ Limits each IP to a maximum of 25 requests within a 15-minute window to prevent 
     | ├── auth.middleware.js
     ├── Models/
     | ├── addProductByFarmer.model.js
+    | ├── blacklistedToken.model.js
     | ├── buyerProfile.model.js
     | ├── farmerProfile.model.js
     | ├── orderProduct.model.js
