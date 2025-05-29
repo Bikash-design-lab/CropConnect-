@@ -4,7 +4,7 @@ const app = express();
 require("dotenv").config();
 const cors = require("cors")
 
-const PORT = 8080 || process.env.PORT;
+const PORT = 3000 || process.env.PORT;
 
 // calling ConnectToDB fuction database
 const { ConnectToDB } = require("./Config/db");
