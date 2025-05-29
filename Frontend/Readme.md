@@ -1,6 +1,7 @@
 # Build Frontend/Client side page
 
-# Folder structure
+## Folder structure
+```
 Frontend
 └──
     src/
@@ -29,3 +30,4 @@ Frontend
     │
     ├── app.jsx           
     └── main.jsx            
+```
