@@ -1,4 +1,4 @@
-# Build Frontend/Client side pag
+# Build Frontend/Client side page
 ## :file_folder: Page Structure (Client Side Flow)
 ```
 | Page Name              | Accessible By    | Purpose                           |
