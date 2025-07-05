@@ -99,6 +99,7 @@ node_modules/ #by default huge node module files and folders
 http://localhost:8080
 
 ```
+
 ### User Routes (`/user`)
 
 | Method | Endpoint  | Description                       |
