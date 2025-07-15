@@ -3,6 +3,10 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import AuthInput from '../components/AuthInput';
 
+const BASE_API = import.meta.env.VITE_BASE_API_URL
+const BASE_URL = `${BASE_API}/user/resetPassword` // url for reset password, if forget 
+
+
 const ResetPassword = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();

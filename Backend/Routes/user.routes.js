@@ -142,7 +142,10 @@ userRoute.post("/forgetPassword", async (req, res) => {
     }
     const token = jwt.sign({ userID: user._id, role: user.role }, process.env.SECURED_KEY, { expiresIn: "5m" })
 
-    const resetLink = `http://localhost:${PORT}/user/resetPassword/?token=${token}`
+    // const resetLink = `http://localhost:${PORT}/user/resetPassword/?token=${token}`
+    // const resetLink = `https://crop-connect-zeta.vercel.app/user/resetPassword/?token=${token}`
+    const resetLink = `${process.env.CLIENT_BASE_URL}/user/resetPassword/?token=${token}`
+
 
     // send registr email and password via mail 
     const transporter = nodemailer.createTransport({

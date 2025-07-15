@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import AuthInput from '../components/AuthInput';
 
+const BASE_API = import.meta.env.VITE_BASE_API_URL
+const BASE_URL = `${BASE_API}/forgetPassword/user` // url for generate reset-password link and send it to registered email id 
+
+
 const ForgotPassword = () => {
     const navigate = useNavigate();
     const { requestPasswordReset, loading, error } = useAuth();
@@ -52,6 +56,7 @@ const ForgotPassword = () => {
                         )}
 
                         <button
+                        //  onClick={()=>navigate("/user/forgetpassword")}
                             type="submit"
                             disabled={loading}
                             className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white 
