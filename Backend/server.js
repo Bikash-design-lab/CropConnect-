@@ -28,7 +28,12 @@ const { addProductByFarmerRoute } = require("./Routes/addProductByFarmer.routes"
 
 // Middlewares -> JSON to parse data
 app.use(express.json());
-app.use(cors())
+app.use(cors({
+  origin: [
+    "https://crop-connect-zeta.vercel.app/",
+    "https://localhost:5173/"
+  ]
+}))
 // app.use(limiter)
 
 app.get("/test", (req, res) => {
