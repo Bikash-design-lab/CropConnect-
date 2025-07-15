@@ -1,7 +1,9 @@
 import React from 'react'
 import BuyerNav from './BuyerNav'
 
+
 const MyOrder = () => {
+
   return (
     <div className="p-2 md:p-4 max-w-4xl mx-auto">
      <div className='flex justify-center'>

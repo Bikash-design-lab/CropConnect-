@@ -21,6 +21,8 @@ import MyOrder from '../components/buyer/MyOrder';
 import Cart from '../components/buyer/Cart'
 import EditFarmerProfile from '../components/farmer/EditFarmerProfile';
 import OrderReceived from '../components/farmer/OrderReceived';
+import NotFound from '../components/NotFound';
+import Weather from '../pages/Common/Weather';
 const AppRoutes = () => {
   return (
     <Router>
@@ -61,6 +63,8 @@ const AppRoutes = () => {
         <Route path='/mycart' element={<Cart />} />
         <Route path='/profile/farmer/edit' element={<EditFarmerProfile />} />
         <Route path='/orders/received' element={<OrderReceived />} />
+        <Route path='/weather' element={<Weather/>} />
+        <Route path='*' element={<NotFound/>} />
       </Routes>
     </Router>
   );

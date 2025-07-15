@@ -124,9 +124,32 @@ const FarmerDashboard = () => {
         </select>
       </div>
 
-      {loading ? (
-        <div className="text-center">Loading products...</div>
-      ) : error ? (
+      {loading ?(
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="p-6 rounded shadow-xl bg-white/80 backdrop-blur-sm animate-pulse flex flex-col gap-4">
+                <div className="flex gap-2 overflow-x-auto">
+                  {[...Array(2)].map((_, j) => (
+                    <div key={j} className="w-24 h-24 bg-gray-200 rounded" />
+                  ))}
+                </div>
+                <div className="h-5 bg-gray-200 rounded w-3/4" />
+                <div className="h-4 bg-gray-200 rounded w-full" />
+                <div className="h-4 bg-gray-200 rounded w-5/6" />
+                <div className="h-6 bg-gray-200 rounded w-1/2 mt-2" />
+                <div className="h-4 bg-gray-200 rounded w-2/3" />
+                <div className="h-4 bg-gray-200 rounded w-3/4" />
+                <div className="h-4 bg-gray-200 rounded w-1/2" />
+                <div className="h-4 bg-gray-200 rounded w-full" />
+                <div className="h-4 bg-gray-200 rounded w-2/5" />
+                <div className="flex justify-between mt-4">
+                  <div className="h-4 bg-gray-200 rounded w-1/4" />
+                  <div className="h-4 bg-gray-200 rounded w-1/4" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : error ? (
         <div className="text-center text-red-600">
           <AlertCircle className="inline mr-2" /> {error}
         </div>

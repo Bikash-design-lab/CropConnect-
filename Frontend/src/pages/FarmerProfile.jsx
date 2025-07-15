@@ -55,14 +55,77 @@ const FarmerProfile = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="animate-pulse text-center">
-          <div className="h-6 bg-gray-300 rounded w-48 mx-auto mb-2"></div>
-          <div className="h-4 bg-gray-300 rounded w-32 mx-auto"></div>
+      <div className="min-h-screen bg-gray-50 p-4">
+        <FarmerNavbar />
+        <div className="max-w-4xl mx-auto animate-pulse space-y-6">
+          {/* Header Skeleton */}
+          <div className="text-center mb-8">
+            <div className="h-8 bg-gray-300 w-48 mx-auto rounded mb-2" />
+            <div className="h-4 bg-gray-200 w-64 mx-auto rounded" />
+          </div>
+
+          {/* Profile Card Skeleton */}
+          <div className="bg-white shadow-md rounded-lg overflow-hidden">
+            <div className="bg-gradient-to-r from-green-600 to-blue-600 text-white text-center p-6">
+              <div className="flex flex-col items-center">
+                <div className="w-24 h-24 bg-white/30 rounded-full mb-4" />
+                <div className="h-6 w-40 bg-white/50 rounded mb-2" />
+                <div className="h-4 w-24 bg-white/30 rounded" />
+              </div>
+            </div>
+
+            <div className="p-6 grid md:grid-cols-2 gap-8">
+              {/* Contact Info Skeleton */}
+              <div className="space-y-3">
+                <div className="h-5 bg-gray-200 w-40 rounded mb-2" />
+                <div className="h-4 bg-gray-100 rounded w-full" />
+                <div className="h-4 bg-gray-100 rounded w-full" />
+                <div className="h-4 bg-gray-100 rounded w-full" />
+              </div>
+
+              {/* Location Info Skeleton */}
+              <div className="space-y-3">
+                <div className="h-5 bg-gray-200 w-40 rounded mb-2" />
+                <div className="h-4 bg-gray-100 rounded w-full" />
+                <div className="h-4 bg-gray-100 rounded w-full" />
+                <div className="h-4 bg-gray-100 rounded w-full" />
+              </div>
+            </div>
+
+            {/* Crops Section Skeleton */}
+            <div className="p-6 border-t space-y-2">
+              <div className="h-5 bg-gray-200 w-48 rounded mb-3" />
+              <div className="flex flex-wrap gap-2">
+                {[...Array(4)].map((_, i) => (
+                  <div key={i} className="h-6 w-20 bg-gray-100 rounded-full" />
+                ))}
+              </div>
+            </div>
+
+            {/* Certification Skeleton */}
+            <div className="p-6 border-t space-y-2">
+              <div className="h-5 bg-gray-200 w-64 rounded mb-3" />
+              <div className="h-4 bg-gray-100 rounded w-1/2" />
+              <div className="h-4 bg-gray-100 rounded w-1/3" />
+              <div className="h-4 bg-gray-100 rounded w-3/4" />
+            </div>
+
+            {/* Edit Button Skeleton */}
+            <div className="p-6 border-t text-center">
+              <div className="h-10 w-32 bg-gray-200 rounded mx-auto" />
+            </div>
+          </div>
+
+          {/* Bottom Cards Skeleton */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white p-6 rounded shadow h-24" />
+            <div className="bg-white p-6 rounded shadow h-24" />
+          </div>
         </div>
       </div>
     )
   }
+
 
   if (error) {
     return (
