@@ -177,10 +177,8 @@ userRoute.post("/forgetPassword", async (req, res) => {
         <p style="font-size: 14px; color: #555;">
           If the button doesn't work, copy and paste the following link into your browser:
         </p>
-        <p style="font-size: 14px; color: #555;"><a href="${resetLink}" style="color: #2E7D32;">${resetLink}</a></p>
-
+        <p style="font-size: 14px; color: #555;"><a href="${resetLink}" style="color: #2E7D32;">Password reset link</a></p>
         <hr style="margin: 30px 0;" />
-
         <h4 style="color: #333;">Your Account Details:</h4>
         <p style="font-size: 14px; color: #333;"><strong>Email:</strong> ${user.email}</p>
         <p style="font-size: 14px; color: #333;"><strong>Role:</strong> ${user.role}</p>
