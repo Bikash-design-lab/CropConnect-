@@ -53,7 +53,6 @@ userRoute.post("/signup", async (req, res) => {
                        <h3 style="color: #333;">📄 User Registration Details</h3>
                        <p><b>🧑 Role : </b> ${user.role}</p>
                        <p><b>🆔 Email : </b> ${user.email}</p>
-                       <p><b>📍 Password : </b> ${user.password}</p>
                        <p><b>🗓️ Profile Created At:</b> ${user.createdAt}</p>
                        <hr style="margin: 20px 0;" />
                        <p style="font-size: 15px;">
