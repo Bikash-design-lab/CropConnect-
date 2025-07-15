@@ -35,7 +35,7 @@ app.use(cors({
   ],
   credentials: true
 }))
-// app.use(limiter)
+app.use(limiter)
 
 app.get("/test", (req, res) => {
   res.json({ message: "This is test endpoint." });
