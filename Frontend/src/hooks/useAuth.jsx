@@ -142,6 +142,5 @@ export const AuthProvider = ({ children }) => {
     );
 };
 
-// If you are using hooks or context with JSX, the file should be named .jsx or .tsx
-// Rename this file to useAuth.jsx for Vite/React to parse JSX correctly
+
 export const useAuth = () => useContext(AuthContext);

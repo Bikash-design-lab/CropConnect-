@@ -31,6 +31,8 @@ const AppRoutes = () => {
         <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/user/resetPassword" element={<ResetPassword />} />
+
         <Route
           path="/dashboard/farmer"
           element={

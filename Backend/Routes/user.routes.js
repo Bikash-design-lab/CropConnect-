@@ -134,18 +134,13 @@ userRoute.get("/checkMW", Authentication(["farmer", "buyer", "admin"]), async (r
 // password reset link send via mail
 userRoute.post("/forgetPassword", async (req, res) => {
   try {
-
-
     const user = await UserModel.findOne({ email: req.body.email })
     if (!user) {
       return res.status(404).json({ message: `User not found.` })
     }
     const token = jwt.sign({ userID: user._id, role: user.role }, process.env.SECURED_KEY, { expiresIn: "5m" })
 
-    // const resetLink = `http://localhost:${PORT}/user/resetPassword/?token=${token}`
-    // const resetLink = `https://crop-connect-zeta.vercel.app/user/resetPassword/?token=${token}`
     const resetLink = `${process.env.CLIENT_BASE_URL}/user/resetPassword/?token=${token}`
-
 
     // send registr email and password via mail 
     const transporter = nodemailer.createTransport({
