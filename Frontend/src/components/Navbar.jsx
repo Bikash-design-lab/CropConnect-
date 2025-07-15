@@ -1,19 +1,125 @@
-import React from 'react';
-import { NavLink,Link } from 'react-router-dom'; 
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
 const Navbar = () => {
+  const { user, logout, loading } = useAuth();
+  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/signin');
+  };
+
   return (
-    <div className="flex container m-0 px-4 border-2 border-amber-300 mb-6">
-     <div className='pr-4 text-blue-400'> 
-      <Link to="/">CopConnect</Link> </div>
-     <div className="w-1/2 flex space-x-4">
-      <NavLink to="/">Home</NavLink>
-      <NavLink to="/ProductCart">ProductCart</NavLink>
-      <NavLink to="/OrderCart">OrderCart</NavLink>
-      <NavLink to="/ProtectedRoute">ProtectedRoute</NavLink>
-      <NavLink to="/user/signup">signup/user</NavLink>
-     </div>
-    </div>
+    <nav className="sticky top-0 z-50 bg-[var(--color-primary)] text-white px-4 py-3 shadow-lg">
+      <div className="flex justify-between items-center max-w-7xl mx-auto">
+        <Link
+          to="/"
+          className="text-2xl font-extrabold tracking-tight flex items-center gap-2"
+        >
+          <span className="bg-[var(--color-secondary)] text-[var(--color-primary)] px-2 py-1 rounded-lg shadow">
+            Crop
+          </span>
+          <span className="text-white">Connect</span>
+        </Link>
+
+        <div className="md:hidden">
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="focus:outline-none"
+          >
+            <svg
+              className="w-7 h-7"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d={
+                  menuOpen
+                    ? 'M6 18L18 6M6 6l12 12'
+                    : 'M4 6h16M4 12h16M4 18h16'
+                }
+              />
+            </svg>
+          </button>
+        </div>
+
+        <div
+          className={`flex-col md:flex-row md:flex items-center gap-4 font-medium transition-all duration-300 ${menuOpen
+              ? 'flex bg-[var(--color-primary)] absolute top-16 left-0 w-full p-4 shadow-xl'
+              : 'hidden md:flex static w-auto p-0 shadow-none'
+            }`}
+        >
+          {!user && (
+            <>
+              <Link
+                to="/signin"
+                className="text-white hover:text-blue-500 hover:underline transition-colors"
+              >
+                Sign In
+              </Link>
+              <Link
+                to="/signup"
+                className="text-white hover:text-blue-500 hover:underline transition-colors"
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
+
+          {user && user.role === 'farmer' && (
+            <>
+              <Link
+                to="/dashboard/farmer"
+                className="text-white hover:text-blue-500 hover:underline transition-colors"
+              >
+                Farmer Dashboard
+              </Link>
+              <Link
+                to="/profile/farmer"
+                className="text-white hover:text-blue-500 hover:underline transition-colors"
+              >
+                My Profile
+              </Link>
+            </>
+          )}
+
+          {user && user.role === 'buyer' && (
+            <>
+              <Link
+                to="/dashboard/buyer"
+                className="text-white hover:text-blue-500 hover:underline transition-colors"
+              >
+                Buyer Dashboard
+              </Link>
+              <Link
+                to="/profile/buyer"
+                className="text-white hover:text-blue-500 hover:underline transition-colors"
+              >
+                My Profile
+              </Link>
+            </>
+          )}
+
+          {user && (
+            <button
+              onClick={handleLogout}
+              className="ml-0 md:ml-4 bg-[var(--color-secondary)] text-[var(--color-primary)] px-4 py-2 rounded-lg font-bold shadow hover:bg-white hover:text-[var(--color-primary)] transition-all duration-200"
+              disabled={loading}
+            >
+              Logout
+            </button>
+          )}
+        </div>
+      </div>
+    </nav>
   );
 };
 

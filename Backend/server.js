@@ -29,7 +29,7 @@ const { addProductByFarmerRoute } = require("./Routes/addProductByFarmer.routes"
 // Middlewares -> JSON to parse data
 app.use(express.json());
 app.use(cors())
-app.use(limiter)
+// app.use(limiter)
 
 app.get("/test", (req, res) => {
   res.json({ message: "This is test endpoint." });

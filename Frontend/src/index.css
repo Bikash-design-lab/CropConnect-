@@ -1,69 +1,46 @@
-/* :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+:root {
+  --color-primary: #047857; /* Emerald Green */
+  --color-secondary: #fbbf24; /* Amber */
+  --color-accent: #6366f1; /* Indigo */
+  --color-bg: #f9fafb; /* Light Gray */
+  --color-surface: #ffffff; /* White */
+  --color-text: #1f2937; /* Gray-900 */
+  --color-muted: #6b7280; /* Gray-500 */
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  @apply bg-[var(--color-bg)] text-[var(--color-text)] font-sans antialiased;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold text-[var(--color-primary)];
+}
+
+a {
+  @apply text-[var(--color-accent)] hover:underline transition-colors duration-200;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  @apply bg-[var(--color-primary)] text-white rounded-lg px-4 py-2 font-semibold shadow hover:bg-[var(--color-accent)] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-secondary)] focus:ring-offset-2;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-} */
-@import "tailwindcss";
+input, textarea, select {
+  @apply border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all duration-200;
+}
+
+.card {
+  @apply bg-[var(--color-surface)] rounded-2xl shadow-lg p-6 border border-gray-100 transition-transform duration-200 hover:scale-[1.02] hover:shadow-2xl;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: #e5e7eb;
+}
+::-webkit-scrollbar-thumb {
+  background: #a7f3d0;
+  border-radius: 8px;
+}

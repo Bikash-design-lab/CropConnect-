@@ -81,7 +81,6 @@ buyerProfileRoute.post("/add-buyerProfile", Authentication(["buyer"]), async (re
                 </div>
             </div>
             `
-
         });
 
         return res.status(200).json({ message: `Hi ${user.name}, your Buyer's profile has been created successfully!`, createBuyerProfile })
@@ -118,7 +117,7 @@ buyerProfileRoute.get("/get-buyerProfile", Authentication(["buyer"]), async (req
             return res.status(404).json({ message: `Only users with the 'buyer' role can create a buyer profile.` })
         }
         const getBuyerProfile = await BuyerProfileModel.find()
-        return res.status(200).json({ message: `Hi ${user.name}, it's your Buyer profile.`, getBuyerProfile })
+        return res.status(200).json({ message: `Hi ${user.name || 'N/A'}, it's your Buyer profile.`, getBuyerProfile })
     } catch (error) {
         console.log(error)
         return res.status(500).json({ message: "Something went wrong.", error })

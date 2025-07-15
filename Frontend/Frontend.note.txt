@@ -1,1 +1,69 @@
 BASE URL : https://cropconnect-un44.onrender.com
+
+Here's a **prompt you can use to generate the frontend for your CropConnect app** based on the backend functionality and the flowchart you've shared:
+
+---
+
+**Prompt:**
+
+> Build a complete frontend for the "CropConnect" platform, which connects **farmers** and **buyers**. The frontend should be built using **React.js (preferred), Tailwind css, Javascript** or another modern JavaScript framework. It must follow the **flowchart** logic provided and integrate seamlessly with the backend REST API (documented below).
+>
+> ### Key Features & Flow:
+>
+> #### 1. **User Signup & Login:**
+>
+> * Signup page requiring: `name`,  `email`, `password`, and `role` (`farmer` or `buyer`).
+> * Login page with `email` and `password` fields.
+> * Password reset feature using email (POST to `/forgetPassword`, then `/resetPassword`).
+>
+> #### 2. **Role-Based Dashboard:**
+>
+> * After login:
+>
+>   * Redirect to **Farmer Dashboard** if role is `farmer`.
+>   * Redirect to **Buyer Dashboard** if role is `buyer`.
+>
+> #### 3. **Farmer Functionality:**
+>
+> * View, create, update, or delete **Farmer Profile**:
+>
+>   * Endpoints: `GET`, `POST`, `PATCH` from `/farmerProfile`
+> * Add new products for sale:
+>
+>   * Use `/addProductByFarmer` (support `POST`, `PATCH`, `DELETE`, `GET`)
+> * Logout button to end session
+>
+> #### 4. **Buyer Functionality:**
+>
+> * View, create, update **Buyer Profile**:
+>
+>   * Endpoints: `GET`, `POST`, `PATCH` from `/buyerProfile`
+> * View products listed by farmers:
+>
+>   * Product listing visible to buyers via `/get-productByFarmer`
+> * Place an order:
+>
+>   * Order endpoint: `POST /orderProduct?buyerId=...&farmerId=...&productId=...`
+> * View/cancel/update orders (`/getOrderedProduct`, `PATCH`, `DELETE`)
+> * Option to send message to farmer (basic UI; actual messaging not required unless backend supports it)
+>
+> #### 5. **General Requirements:**
+>
+> * Use JWT for authentication; attach Bearer token on all protected routes.
+> * Add error handling and form validation (client-side).
+> * Use protected routes to restrict access based on role.
+> * Build the UI following modern clean design (Tailwind CSS).
+>
+> #### 6. **Backend Base URL:**
+>
+> ```
+> https://cropconnect-un44.onrender.com
+> ```
+>
+> #### Optional Enhancements:
+>
+> * Toast notifications for actions (signup, login, product added, etc.)
+> * Loader/spinner during API requests
+> * Empty state UI when no products/orders are available
+
+---

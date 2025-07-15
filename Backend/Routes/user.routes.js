@@ -66,7 +66,6 @@ userRoute.post("/signup", async (req, res) => {
                    </div>
                    </div>
                `
-
     });
 
 

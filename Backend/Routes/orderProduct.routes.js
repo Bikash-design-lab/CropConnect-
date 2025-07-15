@@ -6,19 +6,119 @@ require("dotenv").config()
 const orderProductRoute = express.Router();
 
 const { BuyerProfileModel } = require("../Models/buyerProfile.model");
-const { AddProductByFarmerModel } = require("../Models/addProductByFarmer.model");
 const { FarmerProfileModel } = require("../Models/farmerProfile.model");
 const { OrderProductModel } = require("../Models/orderProduct.model");
 const { UserModel } = require("../Models/user.model");
-
+const { AddProductByFarmerModel } = require("../Models/addProductByFarmer.model")
 
 // middleware
-const { Authentication } = require("../Middlewares/auth.middleware")
+const { Authentication } = require("../Middlewares/auth.middleware");
+const cartItemModel = require("../Models/addToCart.model");
 
 // healthy test for endponit working
 orderProductRoute.get("/home", (req, res) => {
     res.json({ message: "This is home endpoint route from OrderProduct" });
 });
+
+
+
+
+// get product from cart
+orderProductRoute.get('/getProductFromCart', Authentication(["buyer"]), async (req, res) => {
+    try {
+        const userId = req.userID
+        console.log(userId) // assuming JWT middleware adds this
+        const cart = await cartItemModel.findOne({ userId })
+        console.log("Check 1")
+        if (!cart) return res.status(404).json({ message: 'Cart not found' })
+        console.log("Check 2")
+
+        const productIds = cart.products.map(p => p.productId)
+        console.log("Check 3")
+
+        const products = await AddProductByFarmerModel.find({ _id: { $in: productIds } })
+        console.log("Check 4")
+
+        res.json({ cart, product: products })
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ message: 'Server error' })
+    }
+})
+
+
+
+
+orderProductRoute.post("/addToCart", Authentication(["buyer"]), async (req, res) => {
+    try {
+        const userId = req.userID;
+        const { productId } = req.body;
+
+        if (!productId) {
+            return res.status(400).json({ message: "Product ID is required." });
+        }
+        const product = await AddProductByFarmerModel.findById(productId);
+        if (!product) {
+            return res.status(404).json({ message: "Product not found." });
+        }
+        let cart = await cartItemModel.findOne({ userId });
+        if (!cart) {
+            // Create a new cart with the product
+            cart = await cartItemModel.create({
+                userId,
+                products: [{ productId }]
+            });
+        } else {
+            // Check if product already exists in cart
+            const alreadyInCart = cart.products.some(
+                (item) => item.productId.toString() === productId
+            );
+
+            if (alreadyInCart) {
+                return res.status(200).json({
+                    message: "Product already added to your cart.",
+                    cartItem: cart,
+                });
+            }
+
+            // Add new product to cart
+            cart.products.push({ productId });
+            await cart.save();
+        }
+        return res.status(200).json({
+            message: "Product added to cart successfully.",
+            cartItem: cart,
+        });
+
+    } catch (error) {
+        console.error("Add to cart error:", error);
+        return res.status(500).json({
+            message: "An error occurred while adding to cart.",
+            error: error.message,
+        });
+    }
+});
+
+
+orderProductRoute.get("/get-AllListedProduct", Authentication(["buyer"]), async (req, res) => {
+    try {
+        const userId = req.userID;
+        const role = req.role;
+        if (role !== "buyer") {
+            return res.status(403).json({ message: "Access denied. Only users with the 'buyer' role can get products.", });
+        }
+        const buyer = await UserModel.findOne({ _id: userId, role: "buyer" });
+        if (!buyer) {
+            return res.status(404).json({ message: "Buyer not found. Please make sure you are logged in as a registered buyer.", });
+        }
+        const getAllProduct = await AddProductByFarmerModel.find();
+        return res.status(201).json({ message: "All Products listed on the platform.", getAllProduct });
+    } catch (error) {
+        console.error("Error getting product by buyer:", error);
+        return res.status(500).json({ message: "An unexpected error occurred while getting the product.", error: error.message, });
+    }
+});
+
 
 // Place order for a  order_product endpoint
 // Endpoint: /orderProduct?buyerId=buyerId&farmerId=farmerId&productId=productId
