@@ -207,8 +207,14 @@ userRoute.post("/forgetPassword", async (req, res) => {
 
 // follow link send on mail user are allowed  to reset password any number of time
 userRoute.post("/resetPassword", async (req, res) => {
+  console.log("hio")
   try {
-    const { token } = req.query;
+    const { token, password } = req.body;
+    // console.log("BODY:", ...req.body);
+
+    if (!token) {
+      return res.status(400).json({ message: "Token is required." });
+    }
 
     // Check if token is blacklisted
     const isBlacklistedToken = await BlacklistedTokenModel.findOne({ token });
@@ -218,17 +224,16 @@ userRoute.post("/resetPassword", async (req, res) => {
 
     // Verify JWT token
     const decoded = jwt.verify(token, process.env.SECURED_KEY);
-    if (!decoded) {
-      return res.status(400).json({ message: "Invalid or expired token. Please request a new reset link." });
-    }
-    const userId = decoded.userID
+    const userId = decoded.userID;
+
     // Blacklist the token to prevent reuse
     await BlacklistedTokenModel.create({ token });
 
     // Update user password
     const user = await UserModel.findByIdAndUpdate(
       userId,
-      { ...req.body, password: req.body.password }, { new: true }
+      { password },
+      { new: true }
     );
 
     if (!user) {
@@ -248,5 +253,7 @@ userRoute.post("/resetPassword", async (req, res) => {
     });
   }
 });
+
+
 
 module.exports = { userRoute };
