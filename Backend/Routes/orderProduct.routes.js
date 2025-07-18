@@ -10,10 +10,10 @@ const { FarmerProfileModel } = require("../Models/farmerProfile.model");
 const { OrderProductModel } = require("../Models/orderProduct.model");
 const { UserModel } = require("../Models/user.model");
 const { AddProductByFarmerModel } = require("../Models/addProductByFarmer.model")
+const cartItemModel = require("../Models/addToCart.model");
 
 // middleware
 const { Authentication } = require("../Middlewares/auth.middleware");
-const cartItemModel = require("../Models/addToCart.model");
 
 // healthy test for endponit working
 orderProductRoute.get("/home", (req, res) => {
@@ -27,17 +27,17 @@ orderProductRoute.get("/home", (req, res) => {
 orderProductRoute.get('/getProductFromCart', Authentication(["buyer"]), async (req, res) => {
     try {
         const userId = req.userID
-        console.log(userId) // assuming JWT middleware adds this
+        // console.log(userId) // assuming JWT middleware adds this
         const cart = await cartItemModel.findOne({ userId })
-        console.log("Check 1")
+        // console.log("Check 1")
         if (!cart) return res.status(404).json({ message: 'Cart not found' })
-        console.log("Check 2")
+        // console.log("Check 2")
 
         const productIds = cart.products.map(p => p.productId)
-        console.log("Check 3")
+        // console.log("Check 3")
 
         const products = await AddProductByFarmerModel.find({ _id: { $in: productIds } })
-        console.log("Check 4")
+        // console.log("Check 4")
 
         res.json({ cart, product: products })
     } catch (err) {
@@ -48,12 +48,11 @@ orderProductRoute.get('/getProductFromCart', Authentication(["buyer"]), async (r
 
 
 
-
+// add product to cart
 orderProductRoute.post("/addToCart", Authentication(["buyer"]), async (req, res) => {
     try {
         const userId = req.userID;
         const { productId } = req.body;
-
         if (!productId) {
             return res.status(400).json({ message: "Product ID is required." });
         }
@@ -73,23 +72,22 @@ orderProductRoute.post("/addToCart", Authentication(["buyer"]), async (req, res)
             const alreadyInCart = cart.products.some(
                 (item) => item.productId.toString() === productId
             );
-
             if (alreadyInCart) {
                 return res.status(200).json({
                     message: "Product already added to your cart.",
                     cartItem: cart,
                 });
             }
-
             // Add new product to cart
             cart.products.push({ productId });
             await cart.save();
+            // update the status of that added product on cart status = unavailable
+            await AddProductByFarmerModel.updateOne({ _id: productId }, { $set: { status: "unavailable" } })
         }
         return res.status(200).json({
             message: "Product added to cart successfully.",
             cartItem: cart,
         });
-
     } catch (error) {
         console.error("Add to cart error:", error);
         return res.status(500).json({
@@ -98,6 +96,55 @@ orderProductRoute.post("/addToCart", Authentication(["buyer"]), async (req, res)
         });
     }
 });
+
+// delete order for a  order_product endpoint
+// Endpoint: /cancelOrder?productId=_id
+orderProductRoute.delete("/cancelOrder/:productId", Authentication(["buyer", "admin"]), async (req, res) => {
+    try {
+        const userID = req.userID;
+        const role = req.role;
+        const { productId } = req.params;
+        if (!productId) {
+            return res.status(400).json({ message: "Missing required parameter: productId." });
+        }
+        const user = await UserModel.findById(userID);
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        const cart = await cartItemModel.findOne({ userId: userID });
+        if (!cart) {
+            return res.status(404).json({ message: "Cart not found." });
+        }
+        const alreadyInCart = cart.products.some(
+            (item) => item.productId.toString() === productId
+        );
+        if (role !== "buyer" && role !== "admin") {
+            return res.status(403).json({
+                message: "Access denied: Only users with 'buyer' or 'admin' roles can update an order.",
+            });
+        }
+        // const alreadyInCart = cart.products.some(
+        //     (item) => item.productId.toString() === productId
+        // );
+        if (!alreadyInCart) {
+            return res.status(404).json({
+                message: `Hello ${user.role.toUpperCase()} ${user.name}, the Product with ID '${productId}' is no longer available on the AddToCart bucket.`,
+            });
+        }
+
+        const updatedCart = await cartItemModel.findOneAndUpdate({ userId: userID }, { $pull: { products: { productId } } }, { new: true });
+
+        // update the status of that product after remove from cart. status = available
+        await AddProductByFarmerModel.updateOne({ _id: productId }, { $set: { status: "available" } })
+
+        return res.status(200).json({ message: `Hello ${user.role.toUpperCase()} ${user.name}, the Product with ID '${productId}' is removed from addToCart sucssfully. `, updatedCart });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "An unexpected error occurred while placing the order.", error });
+    }
+});
+
 
 
 orderProductRoute.get("/get-AllListedProduct", Authentication(["buyer"]), async (req, res) => {

@@ -17,12 +17,12 @@ const BuyerDashboard = () => {
   }, [user, navigate]);
 
   return (
-    <div className="p-4 max-w-5xl mx-auto">
+    <div className="p-4 max-w-5xl mx-auto ">
       <div className="w-full max-w-4xl px-4 mx-auto flex items-center justify-between">
         <BuyerNav />
       </div>
 
-      <div className="p-4 md:p-8 bg-gray-50 min-h-screen rounded-xl shadow mt-6">
+      <div className="p-4 md:p-8 bg-gray-50 min-h-fit rounded-xl shadow mt-6">
         <h1 className="text-3xl font-bold text-green-800 mb-4 text-center">Empowering India, One Purchase at a Time</h1>
 
         <p className="text-gray-700 text-lg leading-relaxed mb-6">

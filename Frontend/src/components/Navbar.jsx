@@ -71,7 +71,15 @@ const Navbar = () => {
               >
                 Sign Up
               </Link>
+              <Link
+                to="/contact-us"
+                className="text-white  hover:underline  hover:decoration-blue-500 transition-colors"
+              >
+                contact-Us
+              </Link>
+              
             </>
+            
           )}
 
           {user && user.role === 'farmer' && (

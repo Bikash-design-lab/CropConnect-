@@ -90,10 +90,13 @@ const Home = () => (
         <div>
           <h4 className="text-white font-semibold mb-2">Quick Links</h4>
           <ul className="space-y-1">
+           
+            <li><Link to= "/SeasonalGuide" className="hover:underline">Seasonal crop growing guide</Link></li>
+
+            <li><Link to="/FarmLaw" className="hover:underline">Law for farmer</Link></li>
             <li><Link to="/weather" className="hover:underline">Weather update</Link></li>
             <li><Link to="/signin" className="hover:underline">Login</Link></li>
             <li><Link to="/signup" className="hover:underline">Register</Link></li>
-
           </ul>
         </div>
         <div>

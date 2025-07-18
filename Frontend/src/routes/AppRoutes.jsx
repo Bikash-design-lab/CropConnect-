@@ -23,6 +23,9 @@ import EditFarmerProfile from '../components/farmer/EditFarmerProfile';
 import OrderReceived from '../components/farmer/OrderReceived';
 import NotFound from '../components/NotFound';
 import Weather from '../pages/Common/Weather';
+import FarmLaw from '../pages/Common/FarmLaw';
+import SeasonalGuide from '../pages/Common/SeasonalGuide';
+import ContactUs from '../pages/Common/ContactUs';
 const AppRoutes = () => {
   return (
     <Router>
@@ -64,6 +67,9 @@ const AppRoutes = () => {
         <Route path='/profile/farmer/edit' element={<EditFarmerProfile />} />
         <Route path='/orders/received' element={<OrderReceived />} />
         <Route path='/weather' element={<Weather/>} />
+        <Route path='/FarmLaw' element={<FarmLaw/>} /> 
+        <Route path='/SeasonalGuide' element={<SeasonalGuide/>} /> 
+        <Route path='/contact-us' element={<ContactUs/>} />
         <Route path='*' element={<NotFound/>} />
       </Routes>
     </Router>
