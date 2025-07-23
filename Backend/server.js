@@ -13,10 +13,21 @@ const rateLimit = require("express-rate-limit");
 
 const limiter = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes
-  max: 25, // Limit each IP to 25 requests per windowMs
+  max: 75, // Limit each IP to 25 requests per windowMs
   standardHeaders: 'draft-8',
   legacyHeaders: false,
 });
+
+const fs = require('fs');
+const path = require('path');
+const morgan = require('morgan')
+
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, 'Logs', 'server.log'),
+  { flags: 'a' } // append mode
+);
+
+app.use(morgan('combined', { stream: accessLogStream }));
 
 
 // different endpoint routes

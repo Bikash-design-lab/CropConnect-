@@ -67,7 +67,7 @@ addProductByFarmerRoute.get("/get-productByFarmer", Authentication(["farmer"]), 
         if (!farmer) {
             return res.status(404).json({ message: "Farmer not found. Please make sure you are logged in as a registered farmer.", });
         }
-        const getAllProduct = await AddProductByFarmerModel.find();
+        const getAllProduct = await AddProductByFarmerModel.find({ farmerId: userId });
         return res.status(201).json({ message: "Products listed on the platform.", getAllProduct });
 
     } catch (error) {
@@ -89,7 +89,7 @@ addProductByFarmerRoute.patch("/update-productByFarmer/:productID", Authenticati
         if (!farmer) {
             return res.status(404).json({ message: "Farmer not found. Please make sure you are logged in as a registered farmer.", });
         }
-        const updateParticularProduct = await AddProductByFarmerModel.findOneAndUpdate({ _id: productID }, { farmerId: userId, ...req.body }, { new: true });
+        const updateParticularProduct = await AddProductByFarmerModel.findOneAndUpdate({ _id: productID, farmerId: userId }, { ...req.body }, { new: true });
         return res.status(201).json({ message: "Products detail's updated sucesfully.", updateParticularProduct });
 
     } catch (error) {
@@ -111,7 +111,7 @@ addProductByFarmerRoute.delete("/delete-productByFarmer/:productID", Authenticat
         if (!farmer) {
             return res.status(404).json({ message: "Farmer not found. Please make sure you are logged in as a registered farmer.", });
         }
-        const deleteParticularProduct = await AddProductByFarmerModel.findOneAndDelete({ _id: productID });
+        const deleteParticularProduct = await AddProductByFarmerModel.findOneAndDelete({ _id: productID, farmerId: userId });
         return res.status(201).json({ message: `Product_ID: ${productID}, no longer exists. It's deleted.`, deleteParticularProduct });
 
     } catch (error) {

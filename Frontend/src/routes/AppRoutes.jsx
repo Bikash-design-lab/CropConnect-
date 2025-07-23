@@ -71,6 +71,7 @@ const AppRoutes = () => {
         <Route path='/SeasonalGuide' element={<SeasonalGuide/>} /> 
         <Route path='/contact-us' element={<ContactUs/>} />
         <Route path='*' element={<NotFound/>} />
+        <Route path='/dashboard/farmer' element={<FarmerDashboard/>} />
       </Routes>
     </Router>
   );

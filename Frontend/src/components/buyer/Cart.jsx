@@ -16,7 +16,6 @@ const BASE_API = import.meta.env.VITE_BASE_API_URL;
 const API = `${BASE_API}/orderProduct/getProductFromCart`;
 
 const DELIVERY_CHARGE = 49;
-
 const Cart = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);

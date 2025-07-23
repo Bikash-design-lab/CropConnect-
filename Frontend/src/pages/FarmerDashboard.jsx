@@ -100,8 +100,9 @@ const FarmerDashboard = () => {
 
   return (
     <div className="min-h-screen p-8 bg-gradient-to-br from-green-50 via-blue-50 to-purple-50">
-
-      <FarmerNavbar />
+        <div className='mt-[10px]'>
+          <FarmerNavbar />
+        </div>
       <div className="mb-8 flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -154,7 +155,7 @@ const FarmerDashboard = () => {
           <AlertCircle className="inline mr-2" /> {error}
         </div>
       ) : filteredProducts.length === 0 ? (
-        <div className="text-center">No products found. <Link className="underline text-green-700" to="/products/list">Add one</Link></div>
+        <div className="text-center">No products found. <Link className="underline text-green-700" to="/products/list">Add now</Link></div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProducts.map((product) => (

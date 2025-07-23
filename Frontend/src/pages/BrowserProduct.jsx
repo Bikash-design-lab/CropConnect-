@@ -99,7 +99,6 @@ const BrowserProduct = () => {
       })
 
       const data = await res.json()
-      console.log(data, "from line 102")
 
       console.log(productId, userId, "USerid from browser product")
 

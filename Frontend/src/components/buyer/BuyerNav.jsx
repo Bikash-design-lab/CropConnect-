@@ -1,17 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-    // if (loading) {
-    //     return (
-    //         <div className="min-h-screen flex items-center justify-center bg-gray-100">
-    //         <div className="animate-pulse text-center">
-    //             <div className="h-6 bg-gray-300 rounded w-48 mx-auto mb-2"></div>
-    //             <div className="h-4 bg-gray-300 rounded w-32 mx-auto"></div>
-    //         </div>
-    //         </div>
-    //     )
-    // }
-
 const BuyerNav = () => {
     return (
         <div className="flex flex-wrap gap-3 md:gap-6 mb-4 mt-2 items-center justify-center md:justify-start">
