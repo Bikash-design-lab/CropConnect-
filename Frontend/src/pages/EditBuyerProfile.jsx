@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
@@ -12,7 +14,7 @@ const EditBuyerProfile = () => {
   const [formData, setFormData] = useState({
     phone: '',
     address: '',
-    preferences: [],
+    // preferences: [],
     location: {
       city: '',
       state: '',
@@ -25,6 +27,7 @@ const EditBuyerProfile = () => {
   const [error, setError] = useState(null);
   const [validationErrors, setValidationErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState('');
+  const [preferences, setPreferences] = useState("")
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -37,6 +40,7 @@ const EditBuyerProfile = () => {
         const profile = data.getBuyerProfile?.find((ele) => ele.userId === user._id);
         if (profile) {
           setFormData(profile);
+          setPreferences(profile.preferences.join(", ")) // preferences
         }
       } catch (err) {
         setError(err.message);
@@ -82,7 +86,7 @@ const EditBuyerProfile = () => {
       errors.address = 'Address is required';
     }
 
-    if (!formData.preferences.length) {
+    if (preferences.split(',').map(p => p.trim()).filter(Boolean).length === 0) {
       errors.preferences = 'At least one preference is required';
     }
 
@@ -120,7 +124,11 @@ const EditBuyerProfile = () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ ...formData, userId: user._id }),
+        body: JSON.stringify( {
+    ...formData,
+    preferences: preferences.split(',').map((pref) => pref.trim()).filter(Boolean),
+    userId: user._id
+  }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Failed to save profile');
@@ -129,10 +137,14 @@ const EditBuyerProfile = () => {
       setTimeout(() => {
         navigate('/profile/buyer');
       }, 1000);
+      setPreferences("")
     } catch (err) {
       setError(err.message);
     }
   };
+
+  
+
 
   if (loading) return (
     <div className="min-h-[60vh] flex items-center justify-center">
@@ -206,17 +218,19 @@ const EditBuyerProfile = () => {
           <label className="block font-medium">Preferences (comma-separated)</label>
           <input
             name="preferences"
-            value={formData.preferences.join(', ')}
-            onChange={(e) =>
-              setFormData((prev) => ({
-                ...prev,
-                preferences: e.target.value.split(',').map((pref) => pref.trim()).filter(Boolean),
-              }))
-            }
+            // value={formData.preferences.join(',')}
+            value={preferences}
+            // onChange={(e) =>
+            //   setFormData((prev) => ({
+            //     ...prev,
+            //     preferences: e.target.value.split(',').map((pref) => pref.trim()).filter(Boolean),
+            //   }))
+            // }
+            onChange={(e)=>setPreferences(e.target.value)}
             className={`w-full border px-3 py-2 rounded ${validationErrors.preferences ? 'border-red-500' : ''
               }`}
             required
-            placeholder="e.g., Organic, Local, Fresh"
+            placeholder="e.g., Organic, Local, Vegetables, Grain."
           />
           {validationErrors.preferences && (
             <p className="text-red-500 text-sm mt-1">{validationErrors.preferences}</p>
@@ -276,7 +290,6 @@ const EditBuyerProfile = () => {
             step="any"
           />
         </div>
-
         <button
           type="submit"
           className="w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors"
