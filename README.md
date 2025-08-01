@@ -5,6 +5,19 @@ A secure, real-time agricultural marketplace platform connecting **Farmers** and
 🔗 **Live Site**: [https://crop-connect-zeta.vercel.app/](https://crop-connect-zeta.vercel.app/)
 
 ---
+## Login Credentials
+
+### 🧑‍🌾 Farmer
+- **Role:** Farmer  
+- **Email:** `rajesh@gmail.com`  
+- **Password:** `rajesh@123`
+
+### 🛒 Buyer
+- **Role:** Buyer  
+- **Email:** `bikash@gmail.com`  
+- **Password:** `bikash@123`
+
+---
 
 ## 🚀 Features
 
