@@ -81,6 +81,40 @@ farmerProfileRouter.post("/add-farmerProfile", Authentication(["farmer"]), async
     }
 })
 
+// Get profile image
+farmerProfileRouter.get("/profile-image/:userId", async (req, res) => {
+    try {
+        const { userId } = req.params
+        // Find farmer profile by userId
+        const farmer = await FarmerProfile.findOne({ userId })
+        if (!farmer) {
+            return res.status(404).json({ message: "Profile not found" })
+        }
+        res.json({ profileImage: farmer.profileImage || null })
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message })
+    }
+})
+
+
+// Update profile image
+farmerProfileRouter.put("/update-profile-image", async (req, res) => {
+    try {
+        const { userId, profileImage } = req.body
+        if (!userId || !profileImage) {
+            return res.status(400).json({ message: "UserId and profileImage are required" })
+        }
+        // Update or create farmer profile with new image
+        const farmer = await FarmerProfile.findOneAndUpdate({ userId }, { profileImage }, { new: true, upsert: true })
+        res.json({
+            message: "Profile image updated successfully",
+            profileImage: farmer.profileImage,
+        })
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message })
+    }
+})
+
 farmerProfileRouter.patch("/update-farmerProfile", Authentication(["farmer"]), async (req, res) => {
     try {
         const userID = req.userID

@@ -5,6 +5,7 @@ const addProductByFarmerRoute = express.Router();
 const { AddProductByFarmerModel } = require("../Models/addProductByFarmer.model");
 const { FarmerProfileModel } = require("../Models/farmerProfile.model");
 const { UserModel } = require("../Models/user.model");
+const { cartItemModel } = require("../Models/addToCart.model");
 
 // middleware
 const { Authentication } = require("../Middlewares/auth.middleware")
@@ -120,5 +121,31 @@ addProductByFarmerRoute.delete("/delete-productByFarmer/:productID", Authenticat
     }
 });
 
+// Request to buy products by Buyer
+addProductByFarmerRoute.get("/requestToBuyProducts", Authentication(["farmer"]), async (req, res) => {
+    try {
+        const user_id = req.userID;
+        const role = req.role;
+        if (!["farmer"].includes(role)) {
+            return res.status(403).json({ message: "Access denied. Only farmers allowed." });
+        }
+        const userExists = await UserModel.findOne({ _id: user_id, role: "farmer" });
+        if (!userExists) {
+            return res.status(404).json({ message: "User, Role=Farmer not found." });
+        }
+        const checkProducts = await AddProductByFarmerModel.find({ farmerId: user_id, status: "unavailable" }) // Check if farmer has products;
+        const checkProductIds = await cartItemModel.find({ "products.productId": { $in: checkProducts.map(p => p._id) } }).populate("userId") // Check if any of those products are in any cart
+
+        console.log(checkProducts, checkProductIds)
+        return res.status(200).json({
+            message: "Buyers interested in your unavailable products.",
+            checkProductIds, checkProducts
+        });
+    } catch (error) {
+        console.error("Error fetching buyer requests:", error);
+        return res.status(500).json({ message: "Internal server error.", error: error.message });
+    }
+}
+);
 
 module.exports = { addProductByFarmerRoute };

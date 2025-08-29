@@ -26,6 +26,7 @@ import Weather from '../pages/Common/Weather';
 import FarmLaw from '../pages/Common/FarmLaw';
 import SeasonalGuide from '../pages/Common/SeasonalGuide';
 import ContactUs from '../pages/Common/ContactUs';
+import FarmerHome from '../pages/FarmerHome';
 const AppRoutes = () => {
   return (
     <Router>
@@ -66,12 +67,13 @@ const AppRoutes = () => {
         <Route path='/mycart' element={<Cart />} />
         <Route path='/profile/farmer/edit' element={<EditFarmerProfile />} />
         <Route path='/orders/received' element={<OrderReceived />} />
-        <Route path='/weather' element={<Weather/>} />
-        <Route path='/FarmLaw' element={<FarmLaw/>} /> 
-        <Route path='/SeasonalGuide' element={<SeasonalGuide/>} /> 
-        <Route path='/contact-us' element={<ContactUs/>} />
-        <Route path='*' element={<NotFound/>} />
-        <Route path='/dashboard/farmer' element={<FarmerDashboard/>} />
+        <Route path='/weather' element={<Weather />} />
+        <Route path='/FarmLaw' element={<FarmLaw />} />
+        <Route path='/SeasonalGuide' element={<SeasonalGuide />} />
+        <Route path='/contact-us' element={<ContactUs />} />
+        <Route path='*' element={<NotFound />} />
+        <Route path='/dashboard/farmer' element={<FarmerDashboard />} />
+        <Route path='/dashboard/farmer/home' element={<FarmerHome />} />
       </Routes>
     </Router>
   );

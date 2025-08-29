@@ -10,8 +10,7 @@ const { FarmerProfileModel } = require("../Models/farmerProfile.model");
 const { OrderProductModel } = require("../Models/orderProduct.model");
 const { UserModel } = require("../Models/user.model");
 const { AddProductByFarmerModel } = require("../Models/addProductByFarmer.model")
-const cartItemModel = require("../Models/addToCart.model");
-
+const { cartItemModel } = require("../Models/addToCart.model")
 // middleware
 const { Authentication } = require("../Middlewares/auth.middleware");
 
@@ -46,56 +45,6 @@ orderProductRoute.get('/getProductFromCart', Authentication(["buyer"]), async (r
     }
 })
 
-
-
-// add product to cart
-// orderProductRoute.post("/addToCart", Authentication(["buyer"]), async (req, res) => {
-//     try {
-//         const userId = req.userID;
-//         const { productId } = req.body;
-//         if (!productId) {
-//             return res.status(400).json({ message: "Product ID is required." });
-//         }
-//         const product = await AddProductByFarmerModel.findById(productId);
-//         if (!product) {
-//             return res.status(404).json({ message: "Product not found." });
-//         }
-//         let cart = await cartItemModel.findOne({ userId });
-//         if (!cart) {
-//             // Create a new cart with the product
-//             cart = await cartItemModel.create({
-//                 userId,
-//                 products: [{ productId }]
-//             });
-//         } else {
-//             // Check if product already exists in cart
-//             const alreadyInCart = cart.products.some(
-//                 (item) => item.productId.toString() === productId
-//             );
-//             if (alreadyInCart) {
-//                 return res.status(200).json({
-//                     message: "Product already added to your cart.",
-//                     cartItem: cart,
-//                 });
-//             }
-//             // Add new product to cart
-//             cart.products.push({ productId });
-//             await cart.save();
-//             // update the status of that added product on cart status = unavailable
-//             await AddProductByFarmerModel.updateOne({ _id: productId }, { $set: { status: "unavailable" } })
-//         }
-//         return res.status(200).json({
-//             message: "Product added to cart successfully.",
-//             cartItem: cart,
-//         });
-//     } catch (error) {
-//         console.error("Add to cart error:", error);
-//         return res.status(500).json({
-//             message: "An error occurred while adding to cart.",
-//             error: error.message,
-//         });
-//     }
-// });
 
 orderProductRoute.post("/addToCart", Authentication(["buyer"]), async (req, res) => {
     try {

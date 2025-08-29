@@ -1,7 +1,18 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+
+let guestBuyerLogin = {
+  email: "bikash@gmail.com",
+  password: "bikash@123",
+  role: "buyer"
+}
+
+let guestFarmerLogin = {
+  email: "rajesh@gmail.com",
+  password: "rajesh@123",
+  role: "farmer"
+}
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -30,6 +41,20 @@ const Signin = () => {
       return;
     }
     const result = await login(formData);
+    if (result.success) {
+      const userData = JSON.parse(localStorage.getItem('cropconnect_user'));
+      if (userData?.role === 'farmer') {
+        navigate('/dashboard/farmer');
+      } else {
+        navigate('/dashboard/buyer');
+      }
+    }
+  };
+
+  const handleGuestLogin = async (guestCredentials) => {
+    setFormData(guestCredentials);
+    setFormError({});
+    const result = await login(guestCredentials);
     if (result.success) {
       const userData = JSON.parse(localStorage.getItem('cropconnect_user'));
       if (userData?.role === 'farmer') {
@@ -76,7 +101,10 @@ const Signin = () => {
             type="password"
             placeholder="********"
             value={formData.password}
-            onChange={handleChange}
+            onChange={(e) => {
+              if (e.nativeEvent.inputType === 'insertText' && e.nativeEvent.data === ' ') return;
+              handleChange(e);
+            }}
             disabled={loading}
           />
           {formError.password && <p className="text-red-500 text-xs italic">{formError.password}</p>}
@@ -84,7 +112,7 @@ const Signin = () => {
         {error && <div className="text-red-500 text-sm mb-2">{error}</div>}
         <div className="flex items-center justify-between">
           <button
-            className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
             disabled={loading}
           >
@@ -95,10 +123,25 @@ const Signin = () => {
           </a>
         </div>
       </form>
-      <div>
+      <div className="flex gap-4">
+        <button
+          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          onClick={() => handleGuestLogin(guestBuyerLogin)}
+          disabled={loading}
+        >
+          Guest Buyer Login
+        </button>
+        <button
+          className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          onClick={() => handleGuestLogin(guestFarmerLogin)}
+          disabled={loading}
+        >
+          Guest Farmer Login
+        </button>
       </div>
     </div>
   );
 };
 
 export default Signin;
+

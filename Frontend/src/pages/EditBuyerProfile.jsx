@@ -124,11 +124,11 @@ const EditBuyerProfile = () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify( {
-    ...formData,
-    preferences: preferences.split(',').map((pref) => pref.trim()).filter(Boolean),
-    userId: user._id
-  }),
+        body: JSON.stringify({
+          ...formData,
+          preferences: preferences.split(',').map((pref) => pref.trim()).filter(Boolean),
+          userId: user._id
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Failed to save profile');
@@ -143,7 +143,7 @@ const EditBuyerProfile = () => {
     }
   };
 
-  
+
 
 
   if (loading) return (
@@ -226,7 +226,7 @@ const EditBuyerProfile = () => {
             //     preferences: e.target.value.split(',').map((pref) => pref.trim()).filter(Boolean),
             //   }))
             // }
-            onChange={(e)=>setPreferences(e.target.value)}
+            onChange={(e) => setPreferences(e.target.value)}
             className={`w-full border px-3 py-2 rounded ${validationErrors.preferences ? 'border-red-500' : ''
               }`}
             required

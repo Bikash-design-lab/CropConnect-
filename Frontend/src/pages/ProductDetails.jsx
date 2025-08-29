@@ -25,7 +25,7 @@ const ProductDetails = () => {
         const found = (data.getAllProduct || data.data || data).find((p) => p._id === id);
         if (!found) throw new Error("Product not found");
         setProduct(found);
-        console.log(found)
+        // console.log(found)
       } catch (err) {
         setError(err.message);
       } finally {
@@ -140,7 +140,7 @@ const ProductDetails = () => {
         return "bg-gray-100 text-gray-800 border-gray-200";
     }
   };
-// console.log(product.certificationDetails.authority)
+  // console.log(product.certificationDetails.authority)
   return (
     <div className="min-h-[60vh] bg-gray-50 py-6 px-2 sm:px-4">
       <div className="max-w-2xl mx-auto">
@@ -197,11 +197,10 @@ const ProductDetails = () => {
                     <button
                       key={idx}
                       onClick={() => setSelectedImage(idx)}
-                      className={`w-12 h-12 rounded border-2 transition-all duration-200 ${
-                        selectedImage === idx
+                      className={`w-12 h-12 rounded border-2 transition-all duration-200 ${selectedImage === idx
                           ? "border-green-500 ring-2 ring-green-200"
                           : "border-gray-200 hover:border-gray-300"
-                      }`}
+                        }`}
                     >
                       <img
                         src={img || "/placeholder.svg"}

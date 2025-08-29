@@ -32,6 +32,7 @@ const Cart = () => {
             Authorization: `Bearer ${token}`,
           },
         });
+
         const data = await res.json();
         if (!res.ok) throw new Error(data.message || "Failed to fetch cart");
 
@@ -102,7 +103,7 @@ const Cart = () => {
     setProcessingPayment(true);
     setTimeout(() => {
       setProcessingPayment(false);
-      alert("Payment integration would be implemented here with Razorpay, Stripe, etc.");
+      alert("Hey! Payment integration isn’t live just yet. Sorry for the inconvenience, and thanks for bearing with us!");
     }, 1000);
   };
 

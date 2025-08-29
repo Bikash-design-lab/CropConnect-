@@ -5,9 +5,9 @@ import AppRoutes from './routes/AppRoutes';
 const App = () => {
   return (
     <>
-    <AuthProvider>
-      <AppRoutes />
-    </AuthProvider>
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
     </>
   );
 };

@@ -7,6 +7,10 @@ const FarmerProfileSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    profileImage: {
+      type: String,
+      default: null,
+    },
     phone: { type: Number },
     location: {
       city: String,
