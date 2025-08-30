@@ -54,66 +54,103 @@ const FarmerProfile = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-4 animate-pulse">
+      <div className="bg-gray-50 p-4 min-h-screen animate-pulse">
+        {/* Navbar placeholder */}
         <div className="flex justify-center mb-4">
-          <FarmerNavbar />
+          <div className="h-10 w-32 sm:w-40 bg-gray-300 rounded" />
         </div>
 
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8 space-y-2">
-            <div className="h-8 bg-gray-300 rounded w-2/3 mx-auto" />
-            <div className="h-4 bg-gray-200 rounded w-1/3 mx-auto" />
-          </div>
-
-          <div className="bg-white shadow-md rounded-lg overflow-hidden mb-6">
+        <div className="mx-auto max-w-6xl">
+          {/* Profile Card */}
+          <div className="bg-white shadow-md rounded-lg overflow-hidden mb-4">
+            {/* Header */}
             <div className="bg-gradient-to-r from-green-600 to-blue-600 text-white text-center p-6">
-              <div className="flex flex-col items-center gap-4">
-                <div className="w-24 h-24 bg-white/40 rounded-full" />
-                <div className="h-6 bg-white/40 rounded w-40" />
-                <div className="h-4 bg-white/40 rounded w-24" />
+              <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white/30 rounded-full" />
+                <div className="space-y-2 text-left sm:text-center">
+                  <div className="h-6 w-32 sm:w-40 bg-white/40 rounded" />
+                  <div className="h-4 w-24 sm:w-32 bg-white/40 rounded" />
+                </div>
               </div>
             </div>
 
-            <div className="p-6 grid md:grid-cols-3 gap-8">
-              {[1, 2].map((_, idx) => (
-                <div key={idx}>
-                  <div className="h-5 bg-gray-300 rounded w-1/2 mb-4" />
+            {/* Body */}
+            <div className="p-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {/* Contact Info */}
+              <div>
+                <div className="h-5 bg-gray-300 w-1/2 mb-4 rounded" />
+                <div className="space-y-3">
+                  {[1, 2, 3].map((i) => (
+                    <div
+                      key={i}
+                      className="flex items-center gap-3 bg-gray-50 p-3 rounded"
+                    >
+                      <div className="w-10 h-10 bg-gray-300 rounded-full" />
+                      <div>
+                        <div className="h-3 w-16 sm:w-20 bg-gray-200 rounded mb-1" />
+                        <div className="h-4 w-24 sm:w-28 bg-gray-300 rounded" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Location */}
+              <div>
+                <div className="h-5 bg-gray-300 w-1/3 mb-4 rounded" />
+                <div className="space-y-3">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="bg-gray-50 p-3 rounded">
+                      <div className="h-3 w-14 sm:w-16 bg-gray-200 rounded mb-1" />
+                      <div className="h-4 w-24 sm:w-28 bg-gray-300 rounded" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Crops & Certifications */}
+              <div className="space-y-6">
+                <div>
+                  <div className="h-5 bg-gray-300 w-1/2 mb-4 rounded" />
+                  <div className="flex flex-wrap gap-2">
+                    {[1, 2, 3].map((i) => (
+                      <div
+                        key={i}
+                        className="h-6 w-16 sm:w-20 bg-gray-200 rounded-full"
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <div className="h-5 bg-gray-300 w-2/3 mb-4 rounded" />
                   <div className="space-y-3">
-                    {[1, 2, 3].map((_, i) => (
-                      <div key={i} className="flex items-center gap-3 bg-gray-100 p-3 rounded">
-                        <div className="w-10 h-10 bg-gray-300 rounded-full" />
-                        <div className="flex-1 space-y-2">
-                          <div className="h-3 bg-gray-200 rounded w-1/2" />
-                          <div className="h-4 bg-gray-300 rounded w-2/3" />
-                        </div>
+                    {[1, 2].map((i) => (
+                      <div key={i} className="bg-gray-50 p-3 rounded">
+                        <div className="h-3 w-16 sm:w-20 bg-gray-200 rounded mb-1" />
+                        <div className="h-4 w-24 sm:w-28 bg-gray-300 rounded" />
                       </div>
                     ))}
                   </div>
                 </div>
-              ))}
-              <div>
-                <div className="h-5 bg-gray-300 rounded w-1/3 mb-4" />
-                <div className="flex flex-wrap gap-2">
-                  {[...Array(4)].map((_, i) => (
-                    <div key={i} className="h-6 w-20 bg-gray-200 rounded-full" />
-                  ))}
+
+                <div>
+                  <div className="h-5 bg-gray-300 w-1/3 mb-3 rounded" />
+                  <div className="h-4 w-32 sm:w-40 bg-gray-200 rounded" />
                 </div>
               </div>
             </div>
 
-            <div className="p-6 border-t flex justify-center">
-              <div className="h-10 w-32 bg-gray-300 rounded" />
+            {/* Footer */}
+            <div className="p-6 flex justify-center border-t">
+              <div className="h-10 w-28 sm:w-32 bg-gray-300 rounded" />
             </div>
           </div>
+        </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {[1, 2].map((_, i) => (
-              <div key={i} className="bg-white p-6 rounded shadow space-y-3">
-                <div className="h-5 bg-gray-300 rounded w-1/2" />
-                <div className="h-4 bg-gray-200 rounded w-2/3" />
-              </div>
-            ))}
-          </div>
+        {/* Footer Note */}
+        <div className="text-center mt-6">
+          <div className="h-4 w-48 sm:w-64 bg-gray-300 rounded mx-auto" />
         </div>
       </div>
     )
@@ -141,20 +178,6 @@ const FarmerProfile = () => {
   if (!profile) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        {/* <div className="max-w-md bg-white rounded shadow p-6 text-center">
-          <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <User className="h-8 w-8 text-gray-400" />
-          </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">No Profile Found</h3>
-          <p className="text-gray-600 mb-4">Create your farmer profile to get started</p>
-          <button
-            onClick={handleCreate}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded flex items-center justify-center gap-2 mx-auto"
-          >
-            <Plus className="h-4 w-4" />
-            Create Profile
-          </button>
-        </div> */}
         <EditFarmerProfile />
       </div>
     )
