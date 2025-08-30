@@ -27,7 +27,7 @@ const accessLogStream = fs.createWriteStream(
   { flags: 'a' } // append mode
 );
 
-app.use(morgan('combined', { stream: accessLogStream }));
+// app.use(morgan('combined', { stream: accessLogStream }));
 
 
 // different endpoint routes
@@ -46,6 +46,7 @@ app.use(cors({
   ],
   credentials: true
 }))
+
 app.use(limiter)
 
 app.get("/test", (req, res) => {
