@@ -1,0 +1,1244 @@
+{
+	"info": {
+		"_postman_id": "39573479-3d42517e-60b0-471d-95b9-8b63e7710847",
+		"name": "CropConnect",
+		"description": "The platform for connecting farmers with Buyers. One step up to make India digital.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "test endpoint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b7d2b155-12a6-4531-aecb-0c1fc4f78848",
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.eql(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response schema matches the expected structure\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData).to.have.all.keys('weekly_forecast');\r",
+									"\r",
+									"    pm.expect(responseData.weekly_forecast).to.be.an('array');\r",
+									"    responseData.weekly_forecast.forEach(function(forecast) {\r",
+									"        pm.expect(forecast).to.be.an('object');\r",
+									"        pm.expect(forecast).to.have.all.keys('date', 'high', 'low');\r",
+									"        pm.expect(forecast.date).to.be.a('string').that.is.not.empty;\r",
+									"        pm.expect(forecast.high).to.be.a('number');\r",
+									"        pm.expect(forecast.low).to.be.a('number');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"All fields in the response are of the expected data types\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    \r",
+									"    // Check for expected data types\r",
+									"    pm.expect(responseData).to.have.property('field1').that.is.a('string');\r",
+									"    pm.expect(responseData).to.have.property('field2').that.is.a('number');\r",
+									"    pm.expect(responseData).to.have.property('field3').that.is.a('boolean');\r",
+									"    pm.expect(responseData).to.have.property('field4').that.is.a('array');\r",
+									"    pm.expect(responseData).to.have.property('field5').that.is.an('object');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response does not contain any unexpected fields\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    const expectedFields = ['field1', 'field2', 'field3']; // Replace with actual expected fields\r",
+									"    const unexpectedFields = Object.keys(responseData).filter(field => !expectedFields.includes(field));\r",
+									"    \r",
+									"    pm.expect(unexpectedFields).to.have.lengthOf(0, \"Response contains unexpected fields: \" + unexpectedFields.join(\", \"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "39573479-27409a7a-eda1-44aa-bbed-5f63d7412566",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"message\":\"Testing api\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/test",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkMW",
+					"id": "39573479-b123bcaf-c8fb-482d-8c7e-b0262c27b8ed",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmQ2YjAyMjI4NTE2YTQzNzA0N2MiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDg1MTk1MjN9.5XZwunHGO52tJnrtD3qmDEBw8S_5ena40h5zBaj1rmE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/user/checkMW",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"user",
+								"checkMW"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SIGNIN farmer",
+					"id": "39573479-0a09d994-7ab0-439e-8322-d57fc92e7ff4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"rajesh@gmail.com\",\r\n    \"password\": \"rajesh@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/user/signin",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"user",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SIGNIN admin",
+					"id": "39573479-49d872be-4ada-4d67-aaf6-42c1d9a4ace1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"email\": \"mohit.verma@example.com\",\r\n    \"password\": \"adminpass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/user/signin",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"user",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SIGNIN buyer",
+					"id": "39573479-5f06170c-0754-4aaa-821e-229acdddbdf3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"barnwalbikash447@gmail.com\",\r\n    \"password\": \"barnwalbikash447@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/user/signin",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"user",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forget PASSWORD",
+					"id": "39573479-d04b6cad-280e-4415-a955-44389333b884",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"barnwalbikash447@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/user/forgetPassword",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"user",
+								"forgetPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset PASSWORD",
+					"id": "39573479-3423c3b8-a6a0-42de-b1ab-a30be1721e23",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmQzZDAyMjI4NTE2YTQzNzA0NzgiLCJyb2xlIjoiYnV5ZXIiLCJpYXQiOjE3NTI1OTMxNjIsImV4cCI6MTc1MjU5MzQ2Mn0.3D9gXr-Of_721z285gdrzc33zeELCVJB3Rv2DRDAVzc\",\r\n    \"password\":\"pass123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/user/resetPassword/",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"user",
+								"resetPassword",
+								""
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmQzZDAyMjI4NTE2YTQzNzA0NzgiLCJyb2xlIjoiYnV5ZXIiLCJpYXQiOjE3NTI1OTMxNjIsImV4cCI6MTc1MjU5MzQ2Mn0.3D9gXr-Of_721z285gdrzc33zeELCVJB3Rv2DRDAVzc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SIGNUP farmer",
+					"id": "39573479-156431fc-fd99-4824-9b99-84e33cfb4031",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Manish Kumar\",\r\n    \"email\": \"Vmodi5425@gmail.com\",\r\n    \"password\": \"pass1234\",\r\n    \"role\": \"farmer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/user/signup",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"user",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SIGNUP buyer",
+					"id": "39573479-cd87965e-cc53-40bf-9e3b-299c020c9763",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Barnwal bikash\",\r\n    \"email\": \"barnwalbikash447@gmail.com\",\r\n    \"password\": \"buyerpwd\",\r\n    \"role\": \"buyer\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/user/signup",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"user",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SIGNUP admin",
+					"id": "39573479-c1613457-aef4-4c17-b0c5-50eb34df23c1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Mohit Verma\",\r\n    \"email\": \"mohit.verma@example.com\",\r\n    \"password\": \"adminpass\",\r\n    \"role\": \"admin\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/user/signup",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"user",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGOUT",
+					"id": "39573479-31b1746d-318a-44f5-af1d-ec80c018aaa8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmQ2YjAyMjI4NTE2YTQzNzA0N2MiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDg1MTk1MjN9.5XZwunHGO52tJnrtD3qmDEBw8S_5ena40h5zBaj1rmE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/user/logout",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"user",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "39573479-0551b430-a652-4cef-93c5-9819189d4cef"
+		},
+		{
+			"name": "BUYER PROFILE",
+			"item": [
+				{
+					"name": "test endpoint",
+					"id": "39573479-fe2a973e-4ed9-4b68-843e-27cca1dfdc20",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/buyerProfile/home",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"buyerProfile",
+								"home"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET buyer_profile",
+					"id": "39573479-2aa079b4-9c7a-4b93-974a-a13ebb40762c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmQzZDAyMjI4NTE2YTQzNzA0NzgiLCJyb2xlIjoiYnV5ZXIiLCJpYXQiOjE3NDg1MzM2NjN9.MnLJu0jyU_wUwDwus2jmXAqj7IathHPUCfECTRTs8hQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/buyerProfile/get-buyerProfile",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"buyerProfile",
+								"get-buyerProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH buyer_profile",
+					"id": "39573479-88e04c36-a5e8-45d0-9701-6de51953ddd9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmQzZDAyMjI4NTE2YTQzNzA0NzgiLCJyb2xlIjoiYnV5ZXIiLCJpYXQiOjE3NDg0NjYyMzJ9.eVMr2Vrf4lBVaoLlRRwxSuxLKTX5yBoIAixGYPnnrzE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"address\": \"12345 Green Market Street\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/buyerProfile/update-buyerProfile",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"buyerProfile",
+								"update-buyerProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST   buyer_profile",
+					"id": "39573479-bc8cf0dd-56f5-43a8-8421-6e2fbeaa6d96",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmQzZDAyMjI4NTE2YTQzNzA0NzgiLCJyb2xlIjoiYnV5ZXIiLCJpYXQiOjE3NDg1MzU3Njd9.D-QRpvJtaXFcFUoz-_Etl_Hh_P--EnuW0mxmIv9zduA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"phone\": \"9876543210\",\r\n  \"address\": \"123 Green Valley Road\",\r\n  \"preferences\": [\"Organic\", \"Locally-Sourced\"],\r\n  \"location\": {\r\n    \"city\": \"Bangalore\",\r\n    \"state\": \"Karnataka\",\r\n    \"coordinates\": {\r\n      \"type\": \"Point\",\r\n      \"coordinates\": [77.5946, 12.9716] // lng, lat\r\n    }\r\n  }\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/buyerProfile/add-buyerProfile",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"buyerProfile",
+								"add-buyerProfile"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "39573479-92419a29-e129-424a-94e1-56dbef34a0f9"
+		},
+		{
+			"name": "FARMER PROFILE",
+			"item": [
+				{
+					"name": "test endpoint",
+					"id": "39573479-9f765161-0833-473c-97c0-3dc8b8e63c41",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/farmerProfile/home",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"farmerProfile",
+								"home"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET farmer_profile",
+					"id": "39573479-a28dd753-78ed-438f-a0b0-58ae2c608e03",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmM3ZTAyMjI4NTE2YTQzNzA0NzQiLCJyb2xlIjoiZmFybWVyIiwiaWF0IjoxNzUxNjE3NzMzfQ.uVsaD3NW2jGe_gJvlWf3SIsJMOuSkMMhCrdd4AWXFtc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/farmerProfile/get-farmerProfile",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"farmerProfile",
+								"get-farmerProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH farmer_profile",
+					"id": "39573479-b4114240-2057-4d0b-a24b-4ef071454cd5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmM3ZTAyMjI4NTE2YTQzNzA0NzQiLCJyb2xlIjoiZmFybWVyIiwiaWF0IjoxNzQ4NDY0MDk4fQ.XIx8Y35Rj4zPCutS0LXUbNW9DOfAI3AGHutGaua40CI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phone\": 9876543211\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/farmerProfile/update-farmerProfile",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"farmerProfile",
+								"update-farmerProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST   farmer_profile",
+					"id": "39573479-68f767b4-f5b7-4178-80b5-93420c59756b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmM3ZTAyMjI4NTE2YTQzNzA0NzQiLCJyb2xlIjoiZmFybWVyIiwiaWF0IjoxNzQ4NTM2MDM0fQ.6fBlwGfswXvORAySmlxHAek7ZdBL00dkJEGR6-UceXk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phone\": 9876543210,\r\n    \"location\": {\r\n        \"city\": \"Varanasi\",\r\n        \"state\": \"Uttar Pradesh\",\r\n        \"pin\": \"221001\",\r\n        \"coordinates\": {\r\n            \"type\": \"Point\",\r\n            \"coordinates\": [\r\n                83.0095,\r\n                25.3176\r\n            ] // [lng, lat]\r\n        }\r\n    },\r\n    \"farmSize\": 5,\r\n    \"isCertifiedSustainable\": true,\r\n    \"certificationDetails\": {\r\n        \"authority\": \"National Organic Certification\",\r\n        \"certifiedOn\": \"2023-07-15\",\r\n        \"documents\": [\r\n            \"doc1.pdf\",\r\n            \"doc2.pdf\"\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/farmerProfile/add-farmerProfile",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"farmerProfile",
+								"add-farmerProfile"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "39573479-51813cde-73b8-4d2a-9e6c-88b948832750"
+		},
+		{
+			"name": "ADD PRODUCT BY FARMER",
+			"item": [
+				{
+					"name": "GET product_by_farmer",
+					"id": "39573479-f1841fa0-367b-4aa8-b534-d70bd7eb7800",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmM3ZTAyMjI4NTE2YTQzNzA0NzQiLCJyb2xlIjoiZmFybWVyIiwiaWF0IjoxNzU2NDY5MDc2fQ.qZpyWtwx-BT4rtybVrlTFKmEPFvE3k-robI6s4TzJDM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmM3ZTAyMjI4NTE2YTQzNzA0NzQiLCJyb2xlIjoiZmFybWVyIiwiaWF0IjoxNzQ4NDY0MDk4fQ.XIx8Y35Rj4zPCutS0LXUbNW9DOfAI3AGHutGaua40CI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/addProductByFarmer/get-productByFarmer",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"addProductByFarmer",
+								"get-productByFarmer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test endpoint",
+					"id": "39573479-2a7a88e1-d4f0-4556-811b-b272b21ede5a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/addProductByFarmer/home",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"addProductByFarmer",
+								"home"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get product details to farmer that was interested to by buyer",
+					"id": "39573479-f6de260c-63c9-49f1-aace-7f9f55ebaa0a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmM3ZTAyMjI4NTE2YTQzNzA0NzQiLCJyb2xlIjoiZmFybWVyIiwiaWF0IjoxNzU2NDY5MDc2fQ.qZpyWtwx-BT4rtybVrlTFKmEPFvE3k-robI6s4TzJDM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/addProductByFarmer/requestToBuyProducts",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"addProductByFarmer",
+								"requestToBuyProducts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH product_by_farmer",
+					"id": "39573479-fa9d8251-07e3-4180-aa5b-c37a3310d250",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmM3ZTAyMjI4NTE2YTQzNzA0NzQiLCJyb2xlIjoiZmFybWVyIiwiaWF0IjoxNzQ4NDY0MDk4fQ.XIx8Y35Rj4zPCutS0LXUbNW9DOfAI3AGHutGaua40CI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"pricePerUnit\": 99\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/addProductByFarmer/update-productByFarmer/68380a8e6b24a018120bd656",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"addProductByFarmer",
+								"update-productByFarmer",
+								"68380a8e6b24a018120bd656"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE product_by_farmer",
+					"id": "39573479-50ddfa81-743f-42ff-b5a9-c2a7fe19b5bc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmM3ZTAyMjI4NTE2YTQzNzA0NzQiLCJyb2xlIjoiZmFybWVyIiwiaWF0IjoxNzQ4NDY0MDk4fQ.XIx8Y35Rj4zPCutS0LXUbNW9DOfAI3AGHutGaua40CI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/addProductByFarmer/delete-productByFarmer/68380a726b24a018120bd650",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"addProductByFarmer",
+								"delete-productByFarmer",
+								"68380a726b24a018120bd650"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST product_by_farmer",
+					"id": "39573479-6eb82b0b-055f-4377-a9fb-72355734e814",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmM3ZTAyMjI4NTE2YTQzNzA0NzQiLCJyb2xlIjoiZmFybWVyIiwiaWF0IjoxNzQ4NTM2MDM0fQ.6fBlwGfswXvORAySmlxHAek7ZdBL00dkJEGR6-UceXk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Moong Dal\",\r\n  \"description\": \"High-protein green gram, ideal for a healthy diet.\",\r\n  \"category\": \"pulse\",\r\n  \"pricePerUnit\": 95,\r\n  \"unit\": \"kg\",\r\n  \"quantityAvailable\": 350,\r\n  \"images\": [],\r\n  \"isOrganic\": false,\r\n  \"isCertified\": true,\r\n  \"certificationDetails\": {\r\n    \"authority\": \"Pulse India Certification\",\r\n    \"certificateNumber\": \"PI-MOONG-24\",\r\n    \"certifiedOn\": \"2024-03-30\"\r\n  },\r\n  \"harvestDate\": \"2024-03-01\",\r\n  \"expiryDate\": \"2025-02-01\",\r\n  \"location\": {\r\n    \"city\": \"Nagpur\",\r\n    \"state\": \"Maharashtra\",\r\n    \"pin\": \"440001\",\r\n    \"coordinates\": {\r\n      \"type\": \"Point\",\r\n      \"coordinates\": [79.0882, 21.1458]\r\n    }\r\n  },\r\n  \"deliveryAvailable\": false,\r\n  \"deliveryRadiusKm\": 0,\r\n  \"status\": \"available\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/addProductByFarmer/add-productByFarmer",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"addProductByFarmer",
+								"add-productByFarmer"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "39573479-15789546-7361-43a2-8b98-7c42611d1da2"
+		},
+		{
+			"name": "ORDER PRODUCT",
+			"item": [
+				{
+					"name": "GET order_product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d2c9b3fb-1cdd-403b-a705-1dc9aa6fb2d5",
+								"exec": [
+									"pm.test(\"Response status code is 404\", function () {\r",
+									"    pm.expect(pm.response.code).to.eql(404);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response content type is text/html\", function () {\r",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.include(\"text/html\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response body is empty for 404 status\", function () {\r",
+									"    pm.expect(pm.response.code).to.eql(404);\r",
+									"    pm.expect(pm.response.text()).to.be.empty;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response schema for 404 error is valid\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(pm.response.code).to.equal(404);\r",
+									"    pm.expect(responseData).to.be.an('object').that.includes.all.keys('error', 'message');\r",
+									"    pm.expect(responseData.error).to.be.a('string');\r",
+									"    pm.expect(responseData.message).to.be.a('string');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "39573479-40be8b78-dc07-493c-bff9-e192cb68d547",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmQzZDAyMjI4NTE2YTQzNzA0NzgiLCJyb2xlIjoiYnV5ZXIiLCJpYXQiOjE3NTIzNDU4MDN9.cIN22FVibMAbR_1VMGaH2md2IjEDC1BjDevd1UAigOM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmQzZDAyMjI4NTE2YTQzNzA0NzgiLCJyb2xlIjoiYnV5ZXIiLCJpYXQiOjE3NTIzMjMxMDZ9.YVgOZx9SnKe9EhRKvoDHwtAM3pGQHMVHodg6yds_gkM",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/orderProductRoute/get-AllListedProduct",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"orderProductRoute",
+								"get-AllListedProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test endpoint",
+					"id": "39573479-13179d38-4a1b-458b-a753-970b529fef78",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/orderProduct/home",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"orderProduct",
+								"home"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH order_product",
+					"id": "39573479-3c46baa7-4a6b-4fb8-b069-8ded31db3e96",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmQzZDAyMjI4NTE2YTQzNzA0NzgiLCJyb2xlIjoiYnV5ZXIiLCJpYXQiOjE3NDg1MTExNDR9.BRWN2S1MBXbTsh_9Dm9Au0qpdoQYUK0YE4Tz37GD9Vk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"deliveryAddress\": {\r\n      \"street\": \"321 More Market Street\",\r\n      \"city\": \"City Stop, Sarojini\",\r\n      \"state\": \"New Delhi\",\r\n      \"pin\": \"526001\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/orderProduct/updateProduct?orderId=683836cdc7b3ec641f0d791d",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"orderProduct",
+								"updateProduct"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "683836cdc7b3ec641f0d791d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE order_product",
+					"id": "39573479-9d1e03d6-5307-4dc3-bff5-2db05f338af6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmQzZDAyMjI4NTE2YTQzNzA0NzgiLCJyb2xlIjoiYnV5ZXIiLCJpYXQiOjE3NDg1MTExNDR9.BRWN2S1MBXbTsh_9Dm9Au0qpdoQYUK0YE4Tz37GD9Vk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/orderProduct/cancelOrder?orderId=6838590827c777bc8760f6cb",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"orderProduct",
+								"cancelOrder"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "6838590827c777bc8760f6cb"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST order_product",
+					"id": "39573479-53ade043-c701-42fa-a080-ea37bd09d3cc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmQzZDAyMjI4NTE2YTQzNzA0NzgiLCJyb2xlIjoiYnV5ZXIiLCJpYXQiOjE3NDg1MzM2NjN9.MnLJu0jyU_wUwDwus2jmXAqj7IathHPUCfECTRTs8hQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"quantity\": 100,\r\n    \"unit\": \"kg\",\r\n    \"pricePerUnit\": 28,\r\n    \"totalPrice\": 2800,\r\n    \"status\": \"pending\",\r\n    \"deliveryAddress\": {\r\n      \"street\": \"Manjhil Gali, Bora rail\",\r\n      \"city\": \"Kohima\",\r\n      \"state\": \"Nagaland\",\r\n      \"pin\": \"911001\"\r\n    },\r\n    \"paymentStatus\": \"pending\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cropconnect-un44.onrender.com/orderProduct/orderProduct?buyerId=68387e0eb81a10f6306c3d1c&farmerId=68377999694ebc2c023f98fc&productId=68380a696b24a018120bd64d",
+							"protocol": "https",
+							"host": [
+								"cropconnect-un44",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"orderProduct",
+								"orderProduct"
+							],
+							"query": [
+								{
+									"key": "buyerId",
+									"value": "68387e0eb81a10f6306c3d1c"
+								},
+								{
+									"key": "farmerId",
+									"value": "68377999694ebc2c023f98fc"
+								},
+								{
+									"key": "productId",
+									"value": "68380a696b24a018120bd64d"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "39573479-f3057e75-bbca-4737-b487-82624c8b493e"
+		}
+	]
+}
