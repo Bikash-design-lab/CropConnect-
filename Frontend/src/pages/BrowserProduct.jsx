@@ -13,6 +13,9 @@ import {
   AlertCircle,
   Search,
 } from "lucide-react"
+import { LazyLoadImage } from "react-lazy-load-image-component"
+import "react-lazy-load-image-component/src/effects/blur.css"
+import placeholderImg from "../../public/placeholderImg.png"
 import BuyerNav from "../components/buyer/BuyerNav"
 
 const BASE_API = import.meta.env.VITE_BASE_API_URL
@@ -203,11 +206,14 @@ const BrowserProduct = () => {
             )}
 
             <div className="flex gap-2 mb-4 overflow-x-auto">
-              {product.images?.map((img, idx) => (
-                <img
+              {product.images?.slice(0, 2).map((img, idx) => (
+                <LazyLoadImage
                   key={idx}
-                  src={img || "/placeholder.svg"}
+                  src={img || placeholderImg}
                   alt={`${product.name}-${idx}`}
+                  width={96}
+                  height={96}
+                  effect="blur"
                   className="w-24 h-24 object-cover rounded border border-white shadow"
                 />
               ))}
@@ -321,3 +327,14 @@ const BrowserProduct = () => {
 }
 
 export default BrowserProduct
+
+
+
+
+// <img
+//   key={idx}
+//   src={img || "/placeholder.svg"}
+//   alt={`${product.name}-${idx}`}
+//   loading="lazy"
+//   className="w-24 h-24 object-cover rounded border border-white shadow"
+// />
