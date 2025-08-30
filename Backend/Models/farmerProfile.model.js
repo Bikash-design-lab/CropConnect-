@@ -33,6 +33,7 @@ const FarmerProfileSchema = new mongoose.Schema(
 );
 
 FarmerProfileSchema.index({ "location.coordinates": "2dsphere" });
-
+FarmerProfileSchema.index({ userId: 1 }, { unique: true }); // Ensure userId is indexed for faster queries
 const FarmerProfileModel = mongoose.model("FarmerProfile", FarmerProfileSchema);
 module.exports = { FarmerProfileModel };
+

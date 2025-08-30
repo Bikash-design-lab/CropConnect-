@@ -40,8 +40,28 @@ const OrderReceived = () => {
         fetchOrders();
     }, []);
 
-    // if (loading) return <p className="text-center mt-6">Loading orders...</p>;
-    if (error) return <p className="text-center text-red-500 mt-6">{error}</p>;
+    if (loading) {
+        return (
+            <div className="min-h-[60vh] flex items-center justify-center">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-green-600 mx-auto mb-4"></div>
+                    <p className="text-gray-600">Loading...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-[60vh] flex items-center justify-center">
+                <div className="text-center bg-white p-6 rounded-lg shadow">
+                    <div className="text-red-500 text-4xl mb-2">⚠️</div>
+                    <h2 className="text-xl font-bold text-red-600 mb-1">Error:{error}</h2>
+                    <p className="text-gray-600 text-sm">{error}</p>
+                </div>
+            </div>
+        );
+    }
     if (!data || !data.checkProductIds?.length)
         return <p className="text-center mt-6">No orders received yet.</p>;
 

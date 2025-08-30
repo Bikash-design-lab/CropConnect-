@@ -19,6 +19,7 @@ const BuyerProfileSchema = new mongoose.Schema({
 });
 
 BuyerProfileSchema.index({ "location.coordinates": "2dsphere" });
-
+BuyerProfileSchema.index({ userId: 1 });  // Ensure userId is indexed for faster queries
 const BuyerProfileModel = mongoose.model("BuyerProfile", BuyerProfileSchema);
 module.exports = { BuyerProfileModel };
+

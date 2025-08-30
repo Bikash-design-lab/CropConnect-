@@ -58,9 +58,11 @@ const ProductSchema = new mongoose.Schema(
 );
 
 ProductSchema.index({ "location.coordinates": "2dsphere" });
+ProductSchema.index({ name: 1, farmerId: 1 }, { unique: true });
 
 const AddProductByFarmerModel = mongoose.model(
   "AddProductByFarmer",
   ProductSchema
 );
 module.exports = { AddProductByFarmerModel };
+

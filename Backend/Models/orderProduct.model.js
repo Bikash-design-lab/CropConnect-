@@ -61,5 +61,11 @@ const OrderProductSchema = new mongoose.Schema(
   }
 );
 
+OrderProductSchema.index({ buyerId: 1, productId: 1 }, { unique: true }); // Prevent duplicate orders for same buyer+product
+OrderProductSchema.index({ farmerId: 1, status: 1 }); // Farmer queries by status
+OrderProductSchema.index({ buyerId: 1, status: 1 }); // Buyer queries by status
+OrderProductSchema.index({ buyerId: 1 });
+OrderProductSchema.index({ farmerId: 1 });
+OrderProductSchema.index({ productId: 1 });
 const OrderProductModel = mongoose.model("OrderProduct", OrderProductSchema);
 module.exports = { OrderProductModel };

@@ -49,6 +49,8 @@ const addToCartSchema = new mongoose.Schema(
     },
     { timestamps: true, versionKey: false }
 );
+addToCartSchema.index({ userId: 1 });
+addToCartSchema.index({ userId: 1, "products.productId": 1 }, { unique: true });  // Ensure a user can't have the same product multiple times in their cart
 
 const cartItemModel = mongoose.model("AddToCart", addToCartSchema);
 module.exports = { cartItemModel };

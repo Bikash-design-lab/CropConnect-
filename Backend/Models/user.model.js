@@ -17,3 +17,6 @@ const UserSchema = new mongoose.Schema(
 const UserModel = mongoose.model("User", UserSchema);
 
 module.exports = { UserModel };
+
+UserModel.createIndexes({ email: 1 }); // Ensure email is indexed for faster queries
+UserModel.createIndexes({ email: 1, role: 1 }, { unique: true }); // Ensure unique email-role combination
