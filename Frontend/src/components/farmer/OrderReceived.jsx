@@ -28,7 +28,6 @@ const OrderReceived = () => {
                 }
 
                 const result = await res.json();
-                // console.log(result);
                 setData(result);
             } catch (err) {
                 setError(err.message || "Something went wrong");
@@ -42,10 +41,13 @@ const OrderReceived = () => {
 
     if (loading) {
         return (
-            <div className="min-h-[60vh] flex items-center justify-center">
-                <div className="text-center">
-                    <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-green-600 mx-auto mb-4"></div>
-                    <p className="text-gray-600">Loading...</p>
+            <div className="mt-4">
+                <FarmerNavbar />
+                <div className="min-h-[60vh] flex items-center justify-center">
+                    <div className="text-center">
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+                        <p className="text-gray-600 font-medium">Loading orders...</p>
+                    </div>
                 </div>
             </div>
         );
@@ -53,117 +55,180 @@ const OrderReceived = () => {
 
     if (error) {
         return (
-            <div className="min-h-[60vh] flex items-center justify-center">
-                <div className="text-center bg-white p-6 rounded-lg shadow">
-                    <div className="text-red-500 text-4xl mb-2">⚠️</div>
-                    <h2 className="text-xl font-bold text-red-600 mb-1">Error:{error}</h2>
-                    <p className="text-gray-600 text-sm">{error}</p>
+            <div className="mt-4">
+                <FarmerNavbar />
+                <div className="min-h-[60vh] flex items-center justify-center">
+                    <div className="text-center bg-white p-8 rounded-xl shadow-md max-w-md">
+                        <div className="text-red-500 text-5xl mb-3">⚠️</div>
+                        <h2 className="text-2xl font-bold text-red-600 mb-2">Error Loading Orders</h2>
+                        <p className="text-gray-600 text-base">{error}</p>
+                    </div>
                 </div>
             </div>
         );
     }
-    if (!data || !data.checkProductIds?.length)
-        return <p className="text-center mt-6">No orders received yet.</p>;
+
+    if (!data || !data.checkProductIds?.length) {
+        return (
+            <div className="mt-4">
+                <FarmerNavbar />
+                <div className="min-h-[60vh] flex items-center justify-center">
+                    <p className="text-lg text-gray-600 font-medium">No orders received yet 📭</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="mt-4">
             <FarmerNavbar />
-            <div className="max-w-5xl mx-auto p-4">
-                <h1 className="text-2xl font-bold mb-6 text-center">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h1 className="text-3xl font-extrabold mb-8 text-center text-green-700">
                     Orders Received
                 </h1>
 
-                {/* <p className="mb-4 text-gray-600">{data.message}</p> */}
+                <div className="space-y-8">
+                    {data.checkProductIds.map((order) => {
+                        const buyer = order.userId;
+                        const buyerProducts = order.products.map((p) => {
+                            const prod = data.checkProducts.find(
+                                (prod) => prod._id === p.productId
+                            );
+                            return prod
+                                ? { ...prod, quantity: p.quantity || 1, addedAt: p.addedAt }
+                                : null;
+                        });
 
-                {data.checkProductIds.map((order) => {
-                    const buyer = order.userId;
-                    // merge order.products with actual product details
-                    const buyerProducts = order.products.map((p) => {
-                        const prod = data.checkProducts.find(
-                            (prod) => prod._id === p.productId
+                        const orderTotal = buyerProducts.reduce((sum, prod) => {
+                            if (!prod) return sum;
+                            return sum + prod.pricePerUnit * prod.quantityAvailable;
+                        }, 0);
+
+                        return (
+                            <div
+                                key={order._id}
+                                className="border rounded-2xl shadow-lg bg-white overflow-hidden transition hover:shadow-xl"
+                            >
+                                <div className="grid grid-cols-1 md:grid-cols-2">
+                                    {/* Buyer Info */}
+                                    <div className="p-6 border-b md:border-b-0 md:border-r border-gray-200">
+                                        <h2 className="text-xl font-semibold mb-4 text-green-700">
+                                            Buyer Details
+                                        </h2>
+                                        <p className="mb-2 text-gray-700">
+                                            <span className="font-medium">Name:</span>{" "}
+                                            {buyer?.name || "Unknown"}
+                                        </p>
+                                        <p className="mb-2 text-gray-700">
+                                            <span className="font-medium">Email:</span>{" "}
+                                            {buyer?.email}
+                                        </p>
+
+                                        {data.additionalBuyerInfo
+                                            ?.find((info) => info.userId === buyer?._id) && (
+                                                <div className="mt-4 space-y-2">
+                                                    {(() => {
+                                                        const extra = data.additionalBuyerInfo.find(
+                                                            (info) => info.userId === buyer?._id
+                                                        );
+                                                        return (
+                                                            <>
+                                                                <p>
+                                                                    <span className="font-medium">Phone:</span>{" "}
+                                                                    {extra.phone || "N/A"}
+                                                                </p>
+                                                                <p>
+                                                                    <span className="font-medium">Address:</span>{" "}
+                                                                    {extra.address || "N/A"}
+                                                                </p>
+                                                                <p>
+                                                                    <span className="font-medium">Location:</span>{" "}
+                                                                    {extra.location?.city}, {extra.location?.state}
+                                                                </p>
+                                                                {extra.preferences?.length > 0 && (
+                                                                    <p>
+                                                                        <span className="font-medium">Preferences:</span>{" "}
+                                                                        {extra.preferences.join(", ")}
+                                                                    </p>
+                                                                )}
+                                                            </>
+                                                        );
+                                                    })()}
+                                                </div>
+                                            )}
+
+                                        <p className="text-xs text-gray-500 mt-6">
+                                            Buyer ID: {order._id}
+                                        </p>
+                                    </div>
+
+                                    {/* Products */}
+                                    <div className="p-6 bg-gray-50">
+                                        <div className="space-y-5">
+                                            {buyerProducts.map(
+                                                (prod) =>
+                                                    prod && (
+                                                        <div
+                                                            key={prod._id}
+                                                            className="flex flex-col sm:flex-row items-start sm:items-center gap-4 border rounded-lg p-4 bg-white shadow-sm hover:shadow-md transition"
+                                                        >
+                                                            <img
+                                                                src={prod.images?.[0]}
+                                                                alt={prod.name}
+                                                                className="w-28 h-28 object-cover rounded-md"
+                                                            />
+                                                            <div className="flex-1">
+                                                                <h3 className="font-semibold text-lg">
+                                                                    {prod.name}
+                                                                </h3>
+                                                                {prod.variety && (
+                                                                    <p className="text-sm text-gray-500">
+                                                                        Variety: {prod.variety}
+                                                                    </p>
+                                                                )}
+                                                                <p className="text-sm text-gray-700">
+                                                                    <span className="font-medium">Product ID:</span>{" "}
+                                                                    {prod._id}
+                                                                </p>
+                                                                <p className="text-gray-700">
+                                                                    Price:{" "}
+                                                                    <span className="font-medium">
+                                                                        {prod.pricePerUnit} ₹ / {prod.unit}
+                                                                    </span>
+                                                                </p>
+                                                                <p className="text-gray-700">
+                                                                    Quantity:{" "}
+                                                                    <span className="font-medium">
+                                                                        {prod.quantityAvailable} {prod.unit}
+                                                                    </span>
+                                                                </p>
+                                                                <p className="font-semibold text-green-600">
+                                                                    Amount:{" "}
+                                                                    {prod.pricePerUnit * prod.quantityAvailable} ₹
+                                                                </p>
+                                                                <p className="text-xs text-gray-500 mt-1">
+                                                                    Interest Shown at:{" "}
+                                                                    {new Date(prod.addedAt).toLocaleString()}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                            )}
+                                        </div>
+                                        <div className="mt-6 text-right">
+                                            <h3 className="text-xl font-bold text-green-700">
+                                                Total Amount Payable to you: ₹ {orderTotal}/-
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         );
-                        return prod
-                            ? { ...prod, quantity: prod.quantityAvailable || 1, addedAt: p.addedAt }
-                            : null;
-                    });
-                    const orderTotal = buyerProducts.reduce((sum, prod) => {
-                        if (!prod) return sum;
-                        return sum + prod.pricePerUnit * prod.quantity;
-                    }, 0);
-                    return (
-                        <div
-                            key={order._id}
-                            className="border rounded-xl shadow-md mb-6 p-4 bg-white"
-                        >
-
-                            {/* Buyer Info */}
-                            <div className="mb-4">
-                                <h2 className="text-lg font-semibold">
-                                    <b className="text-black">Buyer’s Name: </b>
-                                    {buyer?.name || "Unknown"}
-                                </h2>
-                                <p className="text-sm text-gray-600">
-                                    <b className="text-black">Buyer’s Email: </b>
-                                    {buyer?.email}
-                                </p>
-                            </div>
-
-                            {/* Ordered Products */}
-                            <div className="grid md:grid-cols-2 gap-4">
-                                {buyerProducts.map(
-                                    (prod) =>
-                                        prod && (
-                                            <div
-                                                key={prod._id}
-                                                className="border rounded-lg p-3 shadow-sm"
-                                            >
-                                                <img
-                                                    src={prod.images?.[0]}
-                                                    alt={prod.name}
-                                                    className="w-full h-40 object-cover rounded-md mb-3"
-                                                />
-                                                <h3 className="font-semibold">{prod.name}</h3>
-                                                {prod.variety && (
-                                                    <p className="text-sm text-gray-500">
-                                                        Variety: {prod.variety}
-                                                    </p>
-                                                )}
-
-                                                <p className="text-gray-700">
-                                                    Price: {prod.pricePerUnit} ₹ / {prod.unit}
-                                                </p>
-                                                <p className="text-gray-700">
-                                                    Quantity: {prod.quantity} {prod.unit}
-                                                </p>
-                                                <p className="text-gray-800 font-semibold">
-                                                    Final Price: {prod.pricePerUnit * prod.quantityAvailable} ₹
-                                                </p>
-
-                                                <p className="text-xs text-gray-500 mt-1">
-                                                    <b className="text-black"> Added at: {new Date(prod.addedAt).toLocaleString()}</b>
-                                                </p>
-                                                <p className="text-xs text-gray-500">
-                                                    Location: {prod.location?.city},{" "}
-                                                    {prod.location?.state}
-                                                </p>
-                                            </div>
-                                        )
-                                )}
-                            </div>
-
-                            {/* Order Total */}
-                            <div className="mt-4 text-right">
-                                <h3 className="text-lg font-bold text-green-600">
-                                    Order Total: {orderTotal} ₹
-                                </h3>
-                            </div>
-                        </div>
-                    );
-                })}
+                    })}
+                </div>
             </div>
         </div>
     );
 };
 
 export default OrderReceived;
-

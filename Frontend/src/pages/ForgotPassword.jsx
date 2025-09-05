@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import AuthInput from '../components/AuthInput';
+import { toast } from 'react-toastify';
 
 const BASE_API = import.meta.env.VITE_BASE_API_URL
 const BASE_URL = `${BASE_API}/forgetPassword/user` // url for generate reset-password link and send it to registered email id 
@@ -16,8 +17,13 @@ const ForgotPassword = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const result = await requestPasswordReset(email);
-        if (result.success) {
-            setMessage('Password reset link has been sent to your email.');
+        try {
+            if (result.success) {
+                setMessage('Password reset link has been sent to your email.');
+                toast.success("Password reset link send.")
+            }
+        } catch (error) {
+            toast.error("Fails to send re-send link.")
         }
     };
 
@@ -56,7 +62,7 @@ const ForgotPassword = () => {
                         )}
 
                         <button
-                        //  onClick={()=>navigate("/user/forgetpassword")}
+                            //  onClick={()=>navigate("/user/forgetpassword")}
                             type="submit"
                             disabled={loading}
                             className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white 

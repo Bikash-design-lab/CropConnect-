@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { toast } from 'react-toastify';
 
 const BASE_API = import.meta.env.VITE_BASE_API_URL
 const BASE_URL = `${BASE_API}/buyerProfile`
@@ -42,8 +43,10 @@ const EditBuyerProfile = () => {
           setFormData(profile);
           setPreferences(profile.preferences.join(", ")) // preferences
         }
+        toast.success("Profile.")
       } catch (err) {
         setError(err.message);
+        toast.error("Fails to get Your Profile.")
       } finally {
         setLoading(false);
       }
@@ -134,12 +137,14 @@ const EditBuyerProfile = () => {
       if (!res.ok) throw new Error(data.message || 'Failed to save profile');
 
       setSuccessMessage(formData._id ? 'Profile updated successfully!' : 'Profile created successfully!');
+      toast.success(formData._id ? 'Profile updated successfully!' : 'Profile created successfully!');
       setTimeout(() => {
         navigate('/profile/buyer');
       }, 1000);
       setPreferences("")
     } catch (err) {
       setError(err.message);
+      toast.error(err.message || 'Something went wrong');
     }
   };
 

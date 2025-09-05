@@ -17,6 +17,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component"
 import "react-lazy-load-image-component/src/effects/blur.css"
 import placeholderImg from "../../public/placeholderImg.png"
 import BuyerNav from "../components/buyer/BuyerNav"
+import { toast } from "react-toastify"
 
 const BASE_API = import.meta.env.VITE_BASE_API_URL
 const BASE_URL = `${BASE_API}/orderProduct`
@@ -102,13 +103,10 @@ const BrowserProduct = () => {
       })
 
       const data = await res.json()
-      // console.log(data)
-      // console.log(productId, userId, "USerid from browser product")
-
       if (!res.ok) throw new Error(data.message || "Failed to add to cart")
-      alert("Product added to cart ✅")
+      toast.success("Product added to cart ✅")
     } catch (err) {
-      alert(`Error: ${err.message}`)
+      toast.error(`Error: ${err.message}`)
     }
   }
 
@@ -206,7 +204,7 @@ const BrowserProduct = () => {
             )}
 
             <div className="flex gap-2 mb-4 overflow-x-auto">
-              {product.images?.slice(0, 2).map((img, idx) => (
+              {product.images?.slice(0, 4).map((img, idx) => (
                 <LazyLoadImage
                   key={idx}
                   src={img || placeholderImg}

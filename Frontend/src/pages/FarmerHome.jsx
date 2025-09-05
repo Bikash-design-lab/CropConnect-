@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import FarmerNav from '../components/farmer/FarmerNavbar';
+import { toast } from 'react-toastify';
 
 const FarmerHome = () => {
     const { user } = useAuth();
@@ -9,10 +10,17 @@ const FarmerHome = () => {
 
     useEffect(() => {
         if (!user) {
+            toast.error("Please sign-in first.")
             navigate('/signin', { replace: true });
         } else if (user.role !== 'farmer') {
-            if (user.role === 'buyer') navigate('/dashboard/buyer', { replace: true });
-            else navigate('/', { replace: true });
+            if (user.role === 'buyer') {
+                toast.info("Redirecting to Buyer Dashboard...");
+                navigate('/dashboard/buyer', { replace: true });
+            }
+            else {
+                toast.success("Dashboard.")
+                navigate('/', { replace: true });
+            }
         }
     }, [user, navigate]);
 

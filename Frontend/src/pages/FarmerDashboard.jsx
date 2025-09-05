@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 import {
   Package,
   MapPin,
@@ -30,7 +32,7 @@ const FarmerDashboard = () => {
   const [sortOption, setSortOption] = useState('none');
 
   const navigate = useNavigate();
-
+  const fetchedRef = useRef(false);
   useEffect(() => {
     if (!user) {
       navigate('/signin', { replace: true });
@@ -40,7 +42,7 @@ const FarmerDashboard = () => {
   }, [user, navigate]);
 
   useEffect(() => {
-    if (!user || user.role !== 'farmer') return;
+    if (!user || user.role !== 'farmer' || fetchedRef.current) return;
     const fetchProducts = async () => {
       try {
         const token = localStorage.getItem('cropconnect_token');
@@ -51,12 +53,14 @@ const FarmerDashboard = () => {
         if (!res.ok) throw new Error(data.message || 'Failed to fetch products');
         setProducts(data.getAllProduct || []);
       } catch (err) {
-        setError(err.message);
+        // setError(err.message);
+        toast.error(`Error: ${err.message}`);
       } finally {
         setLoading(false);
       }
     };
     fetchProducts();
+    fetchedRef.current = true;
   }, [user]);
 
   const handleDelete = async (productId) => {
@@ -70,8 +74,10 @@ const FarmerDashboard = () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Failed to delete product');
       setProducts(prev => prev.filter(p => p._id !== productId));
+      toast.success('Product deleted successfully!');
     } catch (err) {
       setError(err.message);
+      toast.error(`Delete failed: ${err.message}`);
     }
   };
 
@@ -226,12 +232,12 @@ const FarmerDashboard = () => {
                 </p>
               </div>
 
-              <div className="flex justify-between mt-4">
+              <div className="flex justify-between mt-4 ">
                 <Link
                   to={`/products/edit/${product._id}`}
-                  className="text-blue-600 hover:underline flex items-center gap-1"
+                  className="text-blue-600 hover:underline flex items-center gap-1 border-2 px-2 border-blue-500 rounded"
                 >
-                  <Pencil className="h-4 w-4" /> Edit
+                  <Pencil className="h-4 w-4" /> Edit now
                 </Link>
                 <button
                   onClick={() => handleDelete(product._id)}

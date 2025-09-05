@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import FarmerNavbar from "./FarmerNavbar";
+import { toast } from "react-toastify";
 
 const BASE_URL = "http://localhost:3000/farmerProfile" || "https://cropconnect-un44.onrender.com/farmerProfile";
 
@@ -133,18 +134,23 @@ const EditFarmerProfile = () => {
             if (!res.ok) throw new Error(result.message || "Submission failed");
 
             setSuccessMessage(profile ? "Profile updated successfully!" : "Profile created successfully!");
+            toast.success(profile ? 'Profile updated successfully!' : 'Profile created successfully!');
             setTimeout(() => navigate("/profile/farmer"), 1000);
         } catch (err) {
+            toast.error("Something went wrong.")
             setError(err.message || "Something went wrong.");
         }
     };
 
     if (loading) {
         return (
-            <div className="min-h-[60vh] flex items-center justify-center">
-                <div className="text-center">
-                    <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-green-600 mx-auto mb-4"></div>
-                    <p className="text-gray-600">Loading profile...</p>
+            <div className="mt-4">
+                <FarmerNavbar />
+                <div className="min-h-[60vh] flex items-center justify-center">
+                    <div className="text-center">
+                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-green-600 mx-auto mb-4"></div>
+                        <p className="text-gray-600">Loading profile...</p>
+                    </div>
                 </div>
             </div>
         );
@@ -152,11 +158,14 @@ const EditFarmerProfile = () => {
 
     if (error) {
         return (
-            <div className="min-h-[60vh] flex items-center justify-center">
-                <div className="text-center bg-white p-6 rounded-lg shadow">
-                    <div className="text-red-500 text-4xl mb-2">⚠️</div>
-                    <h2 className="text-xl font-bold text-red-600 mb-1">Error</h2>
-                    <p className="text-gray-600 text-sm">{error}</p>
+            <div className="mt-4">
+                <FarmerNavbar />
+                <div className="min-h-[60vh] flex items-center justify-center">
+                    <div className="text-center bg-white p-6 rounded-lg shadow">
+                        <div className="text-red-500 text-4xl mb-2">⚠️</div>
+                        <h2 className="text-xl font-bold text-red-600 mb-1">Error</h2>
+                        <p className="text-gray-600 text-sm">{error}</p>
+                    </div>
                 </div>
             </div>
         );

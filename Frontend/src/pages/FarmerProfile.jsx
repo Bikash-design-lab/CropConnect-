@@ -4,6 +4,7 @@ import { useAuth } from "../hooks/useAuth"
 import { useNavigate } from "react-router-dom"
 import FarmerNavbar from "../components/farmer/FarmerNavbar"
 import EditFarmerProfile from "../components/farmer/EditFarmerProfile"
+import { toast } from "react-toastify"
 
 const BASE_API = import.meta.env.VITE_BASE_API_URL
 const BASE_URL = `${BASE_API}/farmerProfile`
@@ -32,9 +33,9 @@ const FarmerProfile = () => {
 
         const data = await res.json()
         if (!res.ok) throw new Error(data.message || "Failed to fetch profile")
-
         const farmer = data.getFarmerProfile?.find((p) => p.userId === user._id) || data.data || data.profile || null
         setProfile(farmer)
+        toast.success("Farmer profile loaded successfully")
       } catch (err) {
         if (err.name !== "AbortError") {
           setError(err.message)
@@ -49,7 +50,10 @@ const FarmerProfile = () => {
     return () => controller.abort()
   }, [user?._id])
 
-  const handleEdit = () => navigate("/profile/farmer/edit")
+  const handleEdit = () => {
+    toast.info("Redirecting to edit profile...")
+    navigate("/profile/farmer/edit")
+  }
   const handleCreate = () => navigate("/profile/farmer/edit")
 
   if (loading) {
@@ -176,6 +180,8 @@ const FarmerProfile = () => {
   }
 
   if (!profile) {
+    toast.info("No profile found. Please create one.")
+
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <EditFarmerProfile />

@@ -8,7 +8,8 @@ const { UserModel } = require("../Models/user.model");
 const { cartItemModel } = require("../Models/addToCart.model");
 
 // middleware
-const { Authentication } = require("../Middlewares/auth.middleware")
+const { Authentication } = require("../Middlewares/auth.middleware");
+const { BuyerProfileModel } = require("../Models/buyerProfile.model");
 
 // healthy test for endpoint-working 
 addProductByFarmerRoute.get("/home", (req, res) => {
@@ -133,12 +134,15 @@ addProductByFarmerRoute.get("/requestToBuyProducts", Authentication(["farmer"]),
         if (!userExists) {
             return res.status(404).json({ message: "User, Role=Farmer not found." });
         }
+
         const checkProducts = await AddProductByFarmerModel.find({ farmerId: user_id, status: "unavailable" }) // Check if farmer has products;
         const checkProductIds = await cartItemModel.find({ "products.productId": { $in: checkProducts.map(p => p._id) } }).populate("userId") // Check if any of those products are in any cart
-
-        console.log(checkProducts, checkProductIds)
+        const additionalBuyerInfo = await BuyerProfileModel.find({ userId: { $in: checkProductIds.map(p => p.userId._id) } }) // get additional info of those buyers
+        // console.log(checkProductIds)
+        // console.log(additionalInfo)
         return res.status(200).json({
             message: "Buyers interested in your unavailable products.",
+            additionalBuyerInfo,
             checkProductIds, checkProducts
         });
     } catch (error) {

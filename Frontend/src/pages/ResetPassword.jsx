@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import AuthInput from '../components/AuthInput';
+import { toast } from 'react-toastify';
 
 const BASE_API = import.meta.env.VITE_BASE_API_URL;
 const BASE_URL = `${BASE_API}/user/resetPassword`;
@@ -52,6 +53,7 @@ const ResetPassword = () => {
 
         if (!token) {
             setMessage('Invalid or expired reset link');
+            toast.error('Invalid or expired reset link');
             return;
         }
 
@@ -67,10 +69,12 @@ const ResetPassword = () => {
 
             if (res.data?.message) {
                 setMessage(res.data.message);
+                toast.success(res.data.message);
                 setTimeout(() => navigate('/signin'), 2000);
             }
         } catch (err) {
             console.error(err);
+            toast.error("Failed to reset password.");
             setError(
                 err.response?.data?.message || 'Failed to reset password.'
             );
@@ -111,13 +115,13 @@ const ResetPassword = () => {
                             required
                         />
 
-                        {error && (
+                        {/* {error && (
                             <div className="text-red-500 text-sm">{error}</div>
                         )}
 
                         {message && (
                             <div className="text-green-500 text-sm">{message}</div>
-                        )}
+                        )} */}
 
                         <button
                             type="submit"

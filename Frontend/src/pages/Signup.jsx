@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { toast } from 'react-toastify';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -30,10 +31,18 @@ const Signup = () => {
       setFormError(errors);
       return;
     }
-    const result = await signup(formData);
-    if (result.success) {
-      alert('Registration successful! Please sign in.');
-      navigate('/signin');
+    try {
+      const result = await signup(formData);
+      if (result.success) {
+        toast.success("Registration successful! Please sign in.")
+        navigate('/signin');
+      }
+      else {
+        toast.error(result.message || "Registration failed. Try again.");
+      }
+    }
+    catch (error) {
+      toast.error(err.message || "Something went wrong. Please try again.");
     }
   };
 
@@ -76,6 +85,7 @@ const Signup = () => {
             value={formData.email}
             onChange={handleChange}
             disabled={loading}
+            required
           />
           {formError.email && <p className="text-red-500 text-xs italic">{formError.email}</p>}
         </div>
@@ -107,6 +117,7 @@ const Signup = () => {
             onChange={handleChange}
             disabled={loading}
           >
+
             <option value="farmer">Farmer</option>
             <option value="buyer">Buyer</option>
           </select>

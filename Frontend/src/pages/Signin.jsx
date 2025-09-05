@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { toast } from 'react-toastify';
 
 let guestBuyerLogin = {
   email: "bikash@gmail.com",
@@ -38,11 +39,14 @@ const Signin = () => {
     const errors = validateForm();
     if (Object.keys(errors).length > 0) {
       setFormError(errors);
+      toast.error("Please fix the highlighted errors.");
       return;
     }
     const result = await login(formData);
     if (result.success) {
       const userData = JSON.parse(localStorage.getItem('cropconnect_user'));
+      toast.success(`Welcome back, ${userData?.role}!`);
+
       if (userData?.role === 'farmer') {
         navigate('/dashboard/farmer');
       } else {
@@ -57,6 +61,7 @@ const Signin = () => {
     const result = await login(guestCredentials);
     if (result.success) {
       const userData = JSON.parse(localStorage.getItem('cropconnect_user'));
+      toast.success(`Logged in as Guest ${userData?.role}`);
       if (userData?.role === 'farmer') {
         navigate('/dashboard/farmer');
       } else {

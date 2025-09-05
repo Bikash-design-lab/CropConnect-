@@ -4,6 +4,7 @@ import { useAuth } from "../hooks/useAuth"
 import { useNavigate } from "react-router-dom"
 import BuyerNav from "../components/buyer/BuyerNav"
 import EditBuyerProfile from "./EditBuyerProfile"
+import { toast } from "react-toastify"
 
 const BASE_API = import.meta.env.VITE_BASE_API_URL
 const BASE_URL = `${BASE_API}/buyerProfile`
@@ -33,13 +34,17 @@ const BuyerProfile = () => {
 
         const data = await res.json()
         if (!res.ok) throw new Error(data.message || "Failed to fetch profile")
-
         const buyer = data.getBuyerProfile?.find((p) => p.userId === user._id)
           || data.data || data.profile || null
-
-        setProfile(buyer)
+        if (buyer) {
+          toast.success("Profile loaded successfully.")
+          setProfile(buyer)
+        } else {
+          toast.warn("No profile found.")
+        }
       } catch (err) {
         if (err.name !== "AbortError") {
+          toast.error(`Error ${err.message}`)
           setError(err.message)
         }
       } finally {

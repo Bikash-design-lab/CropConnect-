@@ -165,15 +165,12 @@ userRoute.post("/forgetPassword", async (req, res) => {
         <p style="font-size: 15px; color: #333;">
           We received a request to reset the password associated with your <strong>CropConnect</strong> account.
         </p>
-
         <p style="font-size: 15px; color: #333;">
           To reset your password, please click the button below. This link will expire in <strong>5 minutes</strong> for security reasons.
         </p>
-
         <div style="text-align: center; margin: 30px 0;">
           <a href="${resetLink}" style="background-color: #2E7D32; color: white; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-size: 16px;">Reset Your Password</a>
         </div>
-
         <p style="font-size: 14px; color: #555;">
           If the button doesn't work, copy and paste the following link into your browser:
         </p>
@@ -182,9 +179,7 @@ userRoute.post("/forgetPassword", async (req, res) => {
         <h4 style="color: #333;">Your Account Details:</h4>
         <p style="font-size: 14px; color: #333;"><strong>Email:</strong> ${user.email}</p>
         <p style="font-size: 14px; color: #333;"><strong>Role:</strong> ${user.role}</p>
-
         <hr style="margin: 30px 0;" />
-
         <p style="font-size: 14px; color: #888;">
           If you didn’t request this password reset, you can safely ignore this email. Your account will remain secure.
         </p>
@@ -194,11 +189,7 @@ userRoute.post("/forgetPassword", async (req, res) => {
     </div>
   `
     });
-
-
     return res.status(200).json({ message: `Password reset link send via mail`, resetLink })
-
-
   } catch (error) {
     console.log(error)
     return res.status(500).json({ message: "Something went wrong while requesting forgetPassword request.", error })
@@ -207,7 +198,7 @@ userRoute.post("/forgetPassword", async (req, res) => {
 
 // follow link send on mail user are allowed  to reset password any number of time
 userRoute.post("/resetPassword", async (req, res) => {
-  console.log("hio")
+  // console.log("hio")
   try {
     const { token, password } = req.body;
     // console.log("BODY:", ...req.body);

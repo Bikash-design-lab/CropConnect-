@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import BuyerNav from '../components/buyer/BuyerNav';
+import { toast } from 'react-toastify';
 
 const BuyerDashboard = () => {
   const { user } = useAuth();
@@ -9,10 +10,17 @@ const BuyerDashboard = () => {
 
   useEffect(() => {
     if (!user) {
+      toast.success("Please sign-in first.");
       navigate('/signin', { replace: true });
     } else if (user.role !== 'buyer') {
-      if (user.role === 'farmer') navigate('/dashboard/farmer', { replace: true });
-      else navigate('/', { replace: true });
+      if (user.role === 'farmer') {
+        toast.info("Redirecting to farmer Dashboard...");
+        navigate('/dashboard/farmer', { replace: true });
+      }
+      else {
+        toast.info("Redirecting to Home Page...");
+        navigate('/', { replace: true });
+      }
     }
   }, [user, navigate]);
 

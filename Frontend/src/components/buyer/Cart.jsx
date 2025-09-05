@@ -11,6 +11,7 @@ import {
 
 import { useNavigate } from "react-router-dom";
 import BuyerNav from "../buyer/BuyerNav";
+import { toast } from "react-toastify";
 
 const BASE_API = import.meta.env.VITE_BASE_API_URL;
 const API = `${BASE_API}/orderProduct/getProductFromCart`;
@@ -82,8 +83,9 @@ const Cart = () => {
         throw new Error(data.message || "Failed to remove product from cart");
       }
       setProducts(products.filter((product) => product._id !== productId));
+      toast.success("Removed from cart.")
     } catch (err) {
-      alert(`Error: ${err.message}`);
+      toast.error(`Error: ${err.message}`);
     }
   };
 
