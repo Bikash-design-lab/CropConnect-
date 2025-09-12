@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { toast } from 'react-toastify';
+import Loader from './Common/Loader';
 
 let guestBuyerLogin = {
   email: "bikash@gmail.com",
@@ -121,7 +122,9 @@ const Signin = () => {
             type="submit"
             disabled={loading}
           >
-            {loading ? 'Signing In...' : 'Sign In'}
+            {loading ? <Loader /> : 'Sign In'}
+            {/* {loading ? 'Signing In...' : 'Sign In'} */}
+
           </button>
           <a className="inline-block align-baseline font-bold text-sm text-green-700 hover:text-green-900" href="/forgot-password">
             Forgot Password?

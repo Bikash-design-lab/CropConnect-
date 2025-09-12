@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { toast } from 'react-toastify';
+import Loader from './Common/Loader';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const Signup = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (formError[name]) setFormError((prev) => ({ ...prev, [name]: '' }));
   };
+
 
   const validateForm = () => {
     const errors = {};
@@ -123,13 +125,23 @@ const Signup = () => {
           </select>
         </div>
         {error && <div className="text-red-500 text-sm mb-2">{error}</div>}
-        <button
-          className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-          type="submit"
-          disabled={loading}
-        >
-          {loading ? 'Signing Up...' : 'Sign Up'}
-        </button>
+        <div className='flex justify-center gap-4'>
+          <button
+            className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? <Loader /> : 'Sign Up'}
+            {/* {loading ? 'Signing Up...' : 'Sign Up'} */}
+
+          </button>
+          <button
+            className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+
+            onClick={() => navigate("/signin")}>
+            Sign In
+          </button>
+        </div>
       </form>
     </div>
   );

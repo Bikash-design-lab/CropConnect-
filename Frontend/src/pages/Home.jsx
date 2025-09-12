@@ -1,121 +1,252 @@
 import React from "react";
-import { Leaf, ShieldCheck, Truck, PackageCheck, MapPin, LockKeyhole, PhoneCall } from "lucide-react";
+import {
+  Leaf,
+  ShieldCheck,
+  Truck,
+  PackageCheck,
+  MapPin,
+  LockKeyhole,
+  PhoneCall,
+} from "lucide-react";
 import { Link } from "react-router-dom";
+import StatisticalData from "./Creators/StatisticalData";
+import { motion } from "framer-motion";
 
-const Home = () => (
-  <div className="min-h-screen bg-gray-50 text-gray-800">
-    <section className="bg-green-100 py-16 px-6">
-      <div className="max-w-5xl mx-auto text-center">
-        <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-green-800">
-          Bridging Farmers and Buyers with Trust & Technology
-        </h2>
-        <p className="text-gray-700 max-w-2xl mx-auto text-sm sm:text-base">
-          CropConnect empowers farmers by enabling them to directly showcase and sell their produce—complete with certification, pricing, and location—eliminating middlemen and boosting incomes.
-        </p>
-      </div>
-    </section>
+const Home = () => {
+  let states = [
+    "MP",
+    "Maharashtra",
+    "Rajasthan",
+    "Gujarat",
+    "Odisha",
+    "Karnataka",
+    "Sikkim",
+    "Uttar Pradesh",
+  ];
 
-    <section className="py-16 px-6 bg-white">
-      <div className="max-w-6xl mx-auto text-center">
-        <h3 className="text-2xl font-bold text-green-700 mb-8">India's Agriculture Snapshot 📊</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-sm sm:text-base">
-          <FactCard number="16 %" label="of GDP from agriculture" />
-          <FactCard number="394 million acres" label="Arable land (world's 2nd largest)" />
-          <FactCard number="48.3 %" label="of cropland is irrigated" />
-          <FactCard number="354 MT" label="Food grains output (2025 est.)" />
+  const loopStates = [...states, ...states, ...states];
+
+  return (
+    <div className="w-full bg-gray-50 text-gray-800">
+      {/* Hero Section */}
+      <section className="w-full bg-green-100 py-12 px-4 sm:px-8 lg:px-16">
+        <div className="max-w-7xl mx-auto text-center">
+          <h2 className="text-2xl sm:text-3xl lg:text-5xl font-extrabold leading-snug text-green-800 mb-6">
+            Bridging Farmers and Buyers with Trust & Technology
+          </h2>
+          <p className="text-gray-700 max-w-3xl mx-auto text-sm sm:text-lg leading-relaxed">
+            CropConnect empowers farmers by enabling them to directly showcase
+            and sell their produce—complete with certification, pricing, and
+            location—eliminating middlemen and boosting incomes.
+          </p>
         </div>
-      </div>
-    </section>
+      </section>
 
-    {/* Organic Farming */}
-    <section className="py-16 px-6 bg-gray-100">
-      <div className="max-w-6xl mx-auto text-center">
-        <h3 className="text-2xl font-bold text-green-700 mb-8">Growing Organic Movement 🍃</h3>
-        <p className="text-gray-700 max-w-3xl mx-auto mb-4 text-sm sm:text-base">
-          India leads globally with over 4.4 million organic farmers—and has nearly 2.78 million hectares under certification, though it comprises just ~2 % of national farmland.
-        </p>
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4 mt-8 text-sm">
-          {["MP", "Maharashtra", "Rajasthan", "Gujarat", "Odisha", "Karnataka", "Sikkim", "Uttar Pradesh"].map(state => (
-            <div key={state} className="bg-white p-4 rounded-lg shadow-sm text-gray-700">
-              {state}
-            </div>
-          ))}
-        </div>
-        <p className="text-xs text-gray-500 mt-2">(Top organic states per APEDA 2022‑23)</p>
-      </div>
-    </section>
+      {/* Organic Farming */}
+      <section className="w-full py-12 px-4 sm:px-8 lg:px-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto text-center">
+          <h3 className="text-xl sm:text-2xl lg:text-4xl font-bold text-green-700 mb-8">
+            Growing Organic Movement 🍃
+          </h3>
+          <p className="text-gray-700 max-w-4xl mx-auto mb-6 text-sm sm:text-lg leading-relaxed">
+            India leads globally with over 4.4 million organic farmers—and has
+            nearly 2.78 million hectares under certification, though it
+            comprises just ~2% of national farmland.
+          </p>
 
-    {/* Features */}
-    <section className="py-16 px-6 bg-white">
-      <div className="max-w-6xl mx-auto text-center">
-        <h3 className="text-2xl font-bold text-green-700 mb-8">Key Features</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
-          {[
-            { icon: Leaf, title: "Organic Listings", desc: "Farmers can upload verified organic produce with certification and pricing." },
-            { icon: MapPin, title: "Crop: Variery,Category based Filters", desc: "Buyers can filter CROP by multiple options." },
-            { icon: ShieldCheck, title: "Verification", desc: "All accounts and listings are verified to ensure authentic and secure trading." },
-            { icon: PackageCheck, title: "Weather update", desc: "Take Update of Weather helpful for crop (Harvested, Growing) to reflect real-time data." },
-            { icon: LockKeyhole, title: "Secure Login", desc: "JWT-secured login with token-based password reset functionality." },
-            { icon: Truck, title: "Direct Sales", desc: "No middlemen. Connect directly with verified farmers and buyers." },
-          ].map(({ icon: Icon, title, desc }) => (
-            <div key={title} className="bg-green-50 p-6 rounded-lg shadow">
-              <Icon className="w-8 h-8 text-green-600 mb-4" />
-              <h4 className="font-bold text-lg mb-2">{title}</h4>
-              <p>{desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+          {/* Infinite carousel for states */}
+          <div className="relative overflow-hidden w-full">
+            <motion.div
+              className="flex gap-4 whitespace-nowrap"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{
+                repeat: Infinity,
+                duration: 25,
+                ease: "linear",
+              }}
+            >
+              {loopStates.map((state, idx) => (
+                <div
+                  key={idx}
+                  className="border border-green-300 bg-white py-3 px-6 rounded-xl shadow-sm text-gray-700 inline-block min-w-[120px] sm:min-w-[160px] text-center text-sm sm:text-base hover:shadow-md transition"
+                >
+                  {state}
+                </div>
+              ))}
+            </motion.div>
+          </div>
 
-    {/* Call to Action */}
-    <section className="py-12 px-6 bg-green-700 text-white text-center">
-      <h3 className="text-2xl font-bold mb-4  text-white " >Ready to Empower Farmers?</h3>
-      <p className="mb-6">Join CropConnect today and help transform India’s agricultural future.</p>
-      <Link
-        to="/signup"
-        className="bg-white text-green-700 font-semibold px-6 py-2 rounded hover:bg-gray-100"
-      >
-        Get Started
-      </Link>
-    </section>
+          <p className="text-xs sm:text-sm text-gray-500 mt-4">
+            (Top organic states per APEDA 2022-23)
+          </p>
+        </div>
+      </section>
 
-    {/* Footer */}
-    <footer className="bg-gray-800 text-gray-300 py-6 px-4">
-      <div className="max-w-6xl mx-auto grid sm:grid-cols-2 md:grid-cols-3 gap-8 text-sm">
-        <div>
-          <h4 className="text-white font-semibold mb-2">CropConnect</h4>
-          <p>Empowering farmers with direct market access and digital tools.</p>
-        </div>
-        <div>
-          <h4 className="text-white font-semibold mb-2">Quick Links</h4>
-          <ul className="space-y-1">
-           
-            <li><Link to= "/SeasonalGuide" className="hover:underline">Seasonal crop growing guide</Link></li>
+      {/* Statistical Highlights */}
+      <StatisticalData />
 
-            <li><Link to="/FarmLaw" className="hover:underline">Law for farmer</Link></li>
-            <li><Link to="/weather" className="hover:underline">Weather update</Link></li>
-            <li><Link to="/signin" className="hover:underline">Login</Link></li>
-            <li><Link to="/signup" className="hover:underline">Register</Link></li>
-          </ul>
+      {/* Snapshot Facts */}
+      <section className="w-full py-12 px-4 sm:px-8 lg:px-16 bg-white">
+        <div className="max-w-7xl mx-auto text-center">
+          <h3 className="text-xl sm:text-2xl lg:text-4xl font-bold text-green-700 mb-10">
+            India's Agriculture Snapshot 📊
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <FactCard number="16 %" label="of GDP from agriculture" />
+            <FactCard
+              number="394 million acres"
+              label="Arable land (world's 2nd largest)"
+            />
+            <FactCard number="48.3 %" label="of cropland is irrigated" />
+            <FactCard number="354 MT" label="Food grains output (2025 est.)" />
+          </div>
         </div>
-        <div>
-          <h4 className="text-white font-semibold mb-2">Support</h4>
-          <p className="flex items-center gap-2"><PhoneCall className="w-4 h-4" /> +91-xxxxx-xxxxx</p>
-          <p>Email: support@cropconnect.in</p>
+      </section>
+
+
+      {/* Features */}
+      <section className="w-full py-4 px-4 sm:px-8 lg:px-16 bg-white">
+        <div className="max-w-7xl mx-auto text-center">
+          <h3 className="text-xl sm:text-2xl lg:text-4xl font-bold text-green-700 mb-10">
+            Key Features
+          </h3>
+          <div className="grid grid-cols-4 gap-4">
+            {[
+              {
+                icon: Leaf,
+                title: "Organic Listings",
+                desc: "Upload certified organic produce with transparent pricing and verification.",
+              },
+              {
+                icon: MapPin,
+                title: "Smart Filters",
+                desc: "Easily search crops by category, variety, or location for quick access.",
+              },
+              {
+                icon: ShieldCheck,
+                title: "Verification",
+                desc: "Secure and reliable trading through verified accounts and listings.",
+              },
+              {
+                icon: PackageCheck,
+                title: "Weather Insights",
+                desc: "Stay informed with real-time, crop-friendly weather updates and alerts.",
+              },
+              {
+                icon: LockKeyhole,
+                title: "Secure Login",
+                desc: "Protect your account with JWT-secured login and password reset options.",
+              },
+              {
+                icon: Truck,
+                title: "Direct Sales",
+                desc: "Eliminate middlemen by connecting directly with trusted farmers and buyers.",
+              },
+              {
+                icon: LockKeyhole,
+                title: "Role-Based Access",
+                desc: "Manage access and permissions securely based on user roles and rights.",
+              },
+              {
+                icon: Truck,
+                title: "Seasonal Crop Guides",
+                desc: "Access guides and resources to grow crops effectively each season.",
+              },
+            ].map(({ icon: Icon, title, desc }) => (
+              <div
+                key={title}
+                className="bg-green-50 p-6 rounded-xl shadow hover:shadow-lg transition flex flex-col items-center space-y-3"
+              >
+                <Icon className="w-8 h-8 text-green-600" />
+                <p className="font-semibold sm:text-xl text-green-800 text-center">
+                  {title}
+                </p>
+                <p className="hidden sm:block text-sm sm:text-base text-gray-600 leading-relaxed text-center">
+                  {desc}
+                </p>
+
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="text-center mt-8 text-xs text-gray-400">
-        © {new Date().getFullYear()} CropConnect. All rights reserved.
-      </div>
-    </footer>
-  </div>
-);
+      </section>
+
+
+      {/* Call to Action */}
+      <section className="w-full py-2 px-4 sm:px-8 lg:px-16 bg-green-700 text-white text-center">
+        <div className="max-w-4xl mx-auto">
+          <h4 className="text-2xl text-black lg:text-5xl font-extrabold mb-6">
+            Ready to Empower Farmers?
+          </h4>
+          <p className="mb-4 text-sm sm:text-lg lg:text-xl leading-relaxed">
+            Join CropConnect today and be part of transforming India’s
+            agricultural future.
+          </p>
+          <Link
+            to="/signup"
+            className="inline-block bg-white text-green-700 font-semibold px-8 py-3 rounded-full shadow hover:bg-gray-100  transition text-sm sm:text-base lg:text-lg"
+          >
+            Get Started
+          </Link>
+
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="w-full bg-gray-900 text-gray-300 py-6 px-4 sm:px-8 lg:px-16">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-6 text-sm">
+
+          {/* Brand Info */}
+          <div className="text-center sm:text-left">
+            <h4 className="text-white font-semibold mb-2 text-lg">CropConnect</h4>
+            <p className="text-sm">
+              Empowering farmers with direct market access and digital tools for a sustainable future.
+            </p>
+          </div>
+
+          {/* Quick Links */}
+          <div className="text-center sm:text-left">
+            <h4 className="text-white font-semibold mb-2 text-lg">Quick Links</h4>
+            <ul className="space-y-1 text-sm">
+              <li><Link to="/SeasonalGuide" className="hover:underline">Seasonal Crop Guide</Link></li>
+              <li><Link to="/FarmLaw" className="hover:underline">Farmer Laws</Link></li>
+              <li><Link to="/weather" className="hover:underline">Weather Updates</Link></li>
+              <li><Link to="/signup" className="hover:underline">Register</Link></li>
+            </ul>
+          </div>
+
+          {/* Support */}
+          <div className="text-center sm:text-left">
+            <h4 className="text-white font-semibold mb-2 text-lg">Support</h4>
+            <p className="flex justify-center sm:justify-start items-center gap-2 text-sm mb-1">
+              <PhoneCall className="w-4 h-4" /> +91-xxxxx-xxxxx
+            </p>
+            <p className="text-sm">Email: support@cropconnect.in</p>
+          </div>
+
+          {/* Social Links */}
+          <div className="text-center sm:text-left">
+            <h4 className="text-white font-semibold mb-2 text-lg">Follow Us</h4>
+            <p className="text-sm">Social media links </p>
+          </div>
+        </div>
+
+        {/* Footer Bottom */}
+        <div className="text-center mt-6 text-xs text-gray-500">
+          © {new Date().getFullYear()} CropConnect. All rights reserved.
+        </div>
+      </footer>
+
+    </div>
+  );
+};
 
 const FactCard = ({ number, label }) => (
-  <div className="bg-green-50 p-4 rounded-lg shadow-sm">
-    <h4 className="text-xl font-bold text-green-700">{number}</h4>
-    <p className="mt-1">{label}</p>
+  <div className="bg-green-50 p-6 rounded-xl shadow hover:shadow-md transition">
+    <h4 className="text-lg sm:text-xl lg:text-2xl font-bold text-green-700">
+      {number}
+    </h4>
+    <p className="mt-2 text-sm sm:text-base text-gray-700">{label}</p>
   </div>
 );
 

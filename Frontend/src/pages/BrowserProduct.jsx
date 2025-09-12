@@ -102,6 +102,8 @@ const BrowserProduct = () => {
         body: JSON.stringify({ productId, userId }),
       })
 
+
+
       const data = await res.json()
       if (!res.ok) throw new Error(data.message || "Failed to add to cart")
       toast.success("Product added to cart ✅")
@@ -327,12 +329,3 @@ const BrowserProduct = () => {
 export default BrowserProduct
 
 
-
-
-// <img
-//   key={idx}
-//   src={img || "/placeholder.svg"}
-//   alt={`${product.name}-${idx}`}
-//   loading="lazy"
-//   className="w-24 h-24 object-cover rounded border border-white shadow"
-// />
