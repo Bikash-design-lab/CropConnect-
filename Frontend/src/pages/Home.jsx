@@ -173,7 +173,7 @@ const Home = () => {
 
 
       {/* Call to Action */}
-      <section className="w-full py-2 px-4 sm:px-8 lg:px-16 bg-green-700 text-white text-center">
+      <section className="w-full py-2 px-4 sm:px-8 lg:px-16  text-black text-center">
         <div className="max-w-4xl mx-auto">
           <h4 className="text-2xl text-black lg:text-5xl font-extrabold mb-6">
             Ready to Empower Farmers?
@@ -184,10 +184,14 @@ const Home = () => {
           </p>
           <Link
             to="/signup"
-            className="inline-block bg-white text-green-700 font-semibold px-8 py-3 rounded-full shadow hover:bg-gray-100  transition text-sm sm:text-base lg:text-lg"
+            className="inline-flex items-center gap-1 
+             text-2xl sm:text-3xl lg:text-3xl font-bold 
+             px-4 sm:px-6 lg:px-8 border rounded-md sm:py-3 hover:underline hover:decoration-blue-500 hover:underline-offset-2"
           >
-            Get Started
+            <span className="inline text-yellow-500 font-bold m-0">Get</span>
+            <span className="inline text-green-700 font-bold m-0">Started</span>
           </Link>
+
 
         </div>
       </section>
