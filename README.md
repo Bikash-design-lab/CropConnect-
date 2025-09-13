@@ -3,8 +3,6 @@ A secure, real-time agricultural marketplace platform connecting Farmers and Buy
 
 # [Live Site](https://crop-connect-zeta.vercel.app/)
 
-# [URL][https://crop-connect-zeta.vercel.app/]
-
 ---
 ## Login Credentials
 
