@@ -1,6 +1,6 @@
 # 🌾 CropConnect
+A secure, real-time agricultural marketplace platform connecting Farmers and Buyers, offering tailored access, robust authentication, and seamless interaction.
 
-A secure, real-time agricultural marketplace platform connecting **Farmers** and **Buyers**, with tailored access, product listings, weather updates, and built-in multi features.
 # [Live Site](https://crop-connect-zeta.vercel.app/)
 
 # [URL][https://crop-connect-zeta.vercel.app/]
