@@ -128,7 +128,7 @@ const StatisticalData = () => {
     };
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-[1400px] mx-auto p-5">
+        <div className="grid bg-white grid-cols-1 md:grid-cols-2 gap-8 max-w-[1400px] mx-auto p-5">
             {/* Overall chart */}
             <div className="w-full flex flex-col items-center">
                 <div className="w-full h-96">

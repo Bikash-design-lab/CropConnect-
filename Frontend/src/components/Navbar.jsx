@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {useAuth} from "../hooks/useAuth"
+import { useAuth } from "../hooks/useAuth"
 const Navbar = () => {
   const { user, logout, loading } = useAuth();
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const Navbar = () => {
       <div className="flex justify-between items-center max-w-7xl mx-auto">
         <Link
           to="/"
-          className="text-2xl font-extrabold tracking-tight flex items-center gap-2"
+          className="text-2xl font-extrabold tracking-tight flex items-center"
           onClick={closeMenu}
         >
           <span className="bg-[var(--color-secondary)] text-[var(--color-primary)] px-2 py-1 rounded-lg shadow">
@@ -56,8 +56,8 @@ const Navbar = () => {
 
         <div
           className={`flex-col md:flex-row md:flex items-center gap-4 font-medium transition-all duration-300 ${menuOpen
-              ? 'flex bg-[var(--color-primary)] absolute top-16 left-0 w-full p-4 shadow-xl'
-              : 'hidden md:flex static w-auto p-0 shadow-none'
+            ? 'flex bg-[var(--color-primary)] absolute top-16 left-0 w-full p-4 shadow-xl'
+            : 'hidden md:flex static w-auto p-0 shadow-none'
             }`}
         >
           {!user && (
