@@ -1,8 +1,8 @@
 # 🌾 CropConnect
 
-<strong style="color:green;">
+<p style="color:green; text:bold;">
 A secure, real-time agricultural marketplace connecting farmers and buyers, featuring personalized access, robust authentication, seasonal crop guides, government-compliant documentation and resources, and seamless communication.
-</strong>
+</p>
 
 # [Live Site](https://crop-connect-zeta.vercel.app/)
 
