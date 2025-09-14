@@ -1,6 +1,6 @@
 # 🌾 CropConnect
 
-<p style="color:green; text:bold;">
+<p style="color:green; font-weight:bold;">
 A secure, real-time agricultural marketplace connecting farmers and buyers, featuring personalized access, robust authentication, seasonal crop guides, government-compliant documentation and resources, and seamless communication.
 </p>
 
