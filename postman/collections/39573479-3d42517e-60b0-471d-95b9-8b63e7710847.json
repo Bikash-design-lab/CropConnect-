@@ -1240,8 +1240,42 @@
 			"id": "39573479-f3057e75-bbca-4737-b487-82624c8b493e"
 		},
 		{
-			"name": "Profile Img Buyer",
+			"name": "test endpoint for profile",
 			"id": "39573479-5f4edf3a-1d8d-45ca-947c-c747d9aac8a0",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmQzZDAyMjI4NTE2YTQzNzA0NzgiLCJyb2xlIjoiYnV5ZXIiLCJpYXQiOjE3NTc5NDI1NTZ9.Ji0nJIWGD9zJr20hXuQUcNYorw7Hf7GXFD733sNe3Rk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/setProfileImg/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"setProfileImg",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "set profile img",
+			"id": "39573479-1f08451c-b721-4365-b847-19e6de6c2f7a",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
