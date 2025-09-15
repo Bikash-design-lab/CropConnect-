@@ -1274,7 +1274,7 @@
 			"response": []
 		},
 		{
-			"name": "set profile img",
+			"name": "set profile img(Buyer)",
 			"id": "39573479-1f08451c-b721-4365-b847-19e6de6c2f7a",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
