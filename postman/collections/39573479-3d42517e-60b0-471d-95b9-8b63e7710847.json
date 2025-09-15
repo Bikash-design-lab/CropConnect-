@@ -215,7 +215,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"barnwalbikash447@gmail.com\",\r\n    \"password\": \"barnwalbikash447@gmail.com\"\r\n}",
+							"raw": "{\r\n    \"email\": \"bikash@gmail.com\",\r\n    \"password\": \"bikash@123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -223,13 +223,12 @@
 							}
 						},
 						"url": {
-							"raw": "https://cropconnect-un44.onrender.com/user/signin",
-							"protocol": "https",
+							"raw": "http://localhost:3000/user/signin",
+							"protocol": "http",
 							"host": [
-								"cropconnect-un44",
-								"onrender",
-								"com"
+								"localhost"
 							],
+							"port": "3000",
 							"path": [
 								"user",
 								"signin"
