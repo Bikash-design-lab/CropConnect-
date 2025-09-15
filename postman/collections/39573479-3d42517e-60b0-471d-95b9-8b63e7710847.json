@@ -215,7 +215,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"barnwalbikash447@gmail.com\",\r\n    \"password\": \"barnwalbikash447@gmail.com\"\r\n}",
+							"raw": "{\r\n    \"email\": \"bikash@gmail.com\",\r\n    \"password\": \"bikash@123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -223,13 +223,12 @@
 							}
 						},
 						"url": {
-							"raw": "https://cropconnect-un44.onrender.com/user/signin",
-							"protocol": "https",
+							"raw": "http://localhost:3000/user/signin",
+							"protocol": "http",
 							"host": [
-								"cropconnect-un44",
-								"onrender",
-								"com"
+								"localhost"
 							],
+							"port": "3000",
 							"path": [
 								"user",
 								"signin"
@@ -980,7 +979,7 @@
 			"id": "39573479-15789546-7361-43a2-8b98-7c42611d1da2"
 		},
 		{
-			"name": "ORDER PRODUCT",
+			"name": "SET PROFILE IMAGE",
 			"item": [
 				{
 					"name": "GET order_product",
@@ -1239,6 +1238,130 @@
 				}
 			],
 			"id": "39573479-f3057e75-bbca-4737-b487-82624c8b493e"
+		},
+		{
+			"name": "test endpoint for profile",
+			"id": "39573479-5f4edf3a-1d8d-45ca-947c-c747d9aac8a0",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmQzZDAyMjI4NTE2YTQzNzA0NzgiLCJyb2xlIjoiYnV5ZXIiLCJpYXQiOjE3NTc5NDI1NTZ9.Ji0nJIWGD9zJr20hXuQUcNYorw7Hf7GXFD733sNe3Rk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/setProfileImg/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"setProfileImg",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "set profile img(Buyer)",
+			"id": "39573479-1f08451c-b721-4365-b847-19e6de6c2f7a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmQzZDAyMjI4NTE2YTQzNzA0NzgiLCJyb2xlIjoiYnV5ZXIiLCJpYXQiOjE3NTc5NTc1Nzd9.NXWVrpV9tijTEn0W8nC_l3QSDIWE3w6qplv5UJOfJYY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"uuid": "22c53540-a683-49d6-ad57-f216586ee5ad",
+							"src": "/C:/Users/vmodi/Downloads/BikashProfilePhoto1.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/setProfileImg/set-profile-image",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"setProfileImg",
+						"set-profile-image"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "set profile img(Farmer)",
+			"id": "39573479-00d61c5f-9265-460d-90cb-ec8ef624d6cb",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmQzZDAyMjI4NTE2YTQzNzA0NzgiLCJyb2xlIjoiYnV5ZXIiLCJpYXQiOjE3NTc5NTc1Nzd9.NXWVrpV9tijTEn0W8nC_l3QSDIWE3w6qplv5UJOfJYY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"uuid": "22c53540-a683-49d6-ad57-f216586ee5ad",
+							"src": "/C:/Users/vmodi/Downloads/BikashProfilePhoto1.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/setProfileImg/set-profile-image",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"setProfileImg",
+						"set-profile-image"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
