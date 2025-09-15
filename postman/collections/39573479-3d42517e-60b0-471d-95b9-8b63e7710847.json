@@ -980,7 +980,7 @@
 			"id": "39573479-15789546-7361-43a2-8b98-7c42611d1da2"
 		},
 		{
-			"name": "ORDER PRODUCT",
+			"name": "SET PROFILE IMAGE",
 			"item": [
 				{
 					"name": "GET order_product",
