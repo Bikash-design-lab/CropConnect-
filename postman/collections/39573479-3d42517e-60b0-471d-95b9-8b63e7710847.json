@@ -1317,6 +1317,51 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "set profile img(Farmer)",
+			"id": "39573479-00d61c5f-9265-460d-90cb-ec8ef624d6cb",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODM3NmQzZDAyMjI4NTE2YTQzNzA0NzgiLCJyb2xlIjoiYnV5ZXIiLCJpYXQiOjE3NTc5NTc1Nzd9.NXWVrpV9tijTEn0W8nC_l3QSDIWE3w6qplv5UJOfJYY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"uuid": "22c53540-a683-49d6-ad57-f216586ee5ad",
+							"src": "/C:/Users/vmodi/Downloads/BikashProfilePhoto1.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/setProfileImg/set-profile-image",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"setProfileImg",
+						"set-profile-image"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
