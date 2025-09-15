@@ -1,4 +1,10 @@
 const express = require("express");
+// const path = require("path");
+const multer = require("multer");
+const fs = require("fs");
+const cloudinary = require("cloudinary").v2;
+const dotenv = require("dotenv");
+dotenv.config();
 
 const app = express();
 require("dotenv").config();
@@ -18,7 +24,6 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-const fs = require('fs');
 const path = require('path');
 const morgan = require('morgan')
 
@@ -31,6 +36,7 @@ const accessLogStream = fs.createWriteStream(
 
 
 // different endpoint routes
+const { profileImgRoute } = require("./Routes/profileImg.routes");
 const { userRoute } = require("./Routes/user.routes");
 const { farmerProfileRouter } = require("./Routes/farmerProfile.routes");
 const { buyerProfileRoute } = require("./Routes/buyerProfile.routes");
@@ -67,6 +73,9 @@ app.use("/addProductByFarmer", addProductByFarmerRoute);
 
 // place order of product/crop by buyer's only
 app.use("/orderProduct", orderProductRoute);
+
+// set profile Img of user using cloudinary
+app.use("/setProfileImg", profileImgRoute);
 
 app.listen(PORT, () => {
   ConnectToDB();

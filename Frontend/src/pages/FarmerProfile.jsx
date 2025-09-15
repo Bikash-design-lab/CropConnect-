@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useCallback } from "react"
 import { User, Phone, Mail, MapPin, Shield, Leaf, FileText, AlertCircle, CheckCircle, Edit3, Plus } from "lucide-react"
 import { useAuth } from "../hooks/useAuth"
 import { useNavigate } from "react-router-dom"
 import FarmerNavbar from "../components/farmer/FarmerNavbar"
 import EditFarmerProfile from "../components/farmer/EditFarmerProfile"
 import { toast } from "react-toastify"
+import ProfileImg from "../imageAndCloudinary/ProfileImg"
 
 const BASE_API = import.meta.env.VITE_BASE_API_URL
 const BASE_URL = `${BASE_API}/farmerProfile`
@@ -15,7 +16,12 @@ const FarmerProfile = () => {
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-
+  const handleImageUpdate = useCallback((newImageUrl) => {
+    setProfile((prevProfile) => ({
+      ...prevProfile,
+      profileImage: newImageUrl,
+    }));
+  }, []);
   useEffect(() => {
     const controller = new AbortController()
     const fetchProfile = async () => {
@@ -196,11 +202,9 @@ const FarmerProfile = () => {
       </div>
       <div className="mx-auto">
         <div className="bg-white shadow-md rounded-lg overflow-hidden mb-2">
-          <div className="bg-gradient-to-r from-green-600 to-blue-600 text-white text-center p-6">
-            <div className="flex flex-row justify-center items-center">
-              <div className="w-24 h-24 bg-white/30 rounded-full flex items-center justify-center mb-4 mr-4">
-                <Leaf className="h-20 w-20 text-white" />
-              </div>
+          <div className="bg-gradient-to-r from-green-600 to-blue-600 text-white text-center py-2">
+            <div className="flex flex-row gap-2 justify-center items-center">
+              <ProfileImg profile={profile} onImageUpdate={handleImageUpdate} />
               <div>
                 <h2 className="text-2xl font-bold text-black">Mr. {profile.name || user?.name}</h2>
                 <p className="text-sm flex items-center justify-center gap-1 mt-1 text-green-100">
@@ -316,7 +320,7 @@ const FarmerProfile = () => {
         </div>
       </div>
       <div className="text-center mb-8">
-        <p className="text-gray-600">Manage your farming details and certifications</p>
+        <p className="text-gray-600">Manage your farming details and certifications.</p>
       </div>
     </div>
   )

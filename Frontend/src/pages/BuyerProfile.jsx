@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react"
-import { User, Mail, Phone, MapPin, Heart, Edit3, Plus, AlertCircle, CheckCircle } from "lucide-react"
+import React, { useEffect, useState, useCallback } from "react"
+import { User, Navigation, Map, Mail, Phone, MapPin, Heart, Edit3, Plus, AlertCircle, CheckCircle } from "lucide-react"
 import { useAuth } from "../hooks/useAuth"
 import { useNavigate } from "react-router-dom"
 import BuyerNav from "../components/buyer/BuyerNav"
 import EditBuyerProfile from "./EditBuyerProfile"
 import { toast } from "react-toastify"
+import ProfileImg from "../imageAndCloudinary/ProfileImg"
 
 const BASE_API = import.meta.env.VITE_BASE_API_URL
 const BASE_URL = `${BASE_API}/buyerProfile`
@@ -16,6 +17,14 @@ const BuyerProfile = () => {
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+
+  // Callback to update profile image
+  const handleImageUpdate = useCallback((newImageUrl) => {
+    setProfile((prevProfile) => ({
+      ...prevProfile,
+      profileImage: newImageUrl,
+    }));
+  }, []);
 
   useEffect(() => {
     const controller = new AbortController()
@@ -198,12 +207,12 @@ const BuyerProfile = () => {
       <div className="mx-auto">
 
 
-        <div className="bg-white shadow-md rounded-lg overflow-hidden mb-2">
-          <div className="bg-gradient-to-r from-green-600 to-blue-600 text-white text-center p-6">
-            <div className="flex flex-rows justify-center items-center">
-              <div className="border-red-600 w-24 h-24 bg-white/30 rounded-full flex items-center justify-center mb-4 mr-4">
-                <User className="h-20 w-20 text-white" />
-              </div>
+        <div className="bg-white shadow-md rounded-lg overflow-hidden mb-2  ">
+          <div className="bg-gradient-to-r from-green-600 to-blue-600 text-white text-center ">
+            <div className="flex flex-rows gap-4 justify-center items-center">
+
+              <ProfileImg profile={profile} onImageUpdate={handleImageUpdate} />
+
               <div>
                 <h2 className="text-2xl font-bold text-black"> Mr. {profile.name || user?.name}</h2>
                 <p className="text-sm flex items-center justify-center gap-1 mt-1 text-green-100">
@@ -215,26 +224,20 @@ const BuyerProfile = () => {
           </div>
 
           <div className="p-6 grid md:grid-cols-3 gap-8">
-            <div>
+            <div className="space-y-3">
               <h3 className="text-lg font-semibold mb-4 border-b pb-2">Contact Information</h3>
-              <div className="space-y-3">
-                <InfoRow icon={<Mail className="text-blue-600" />} label="Email" value={profile.email || user?.email} />
-                <InfoRow icon={<Phone className="text-green-600" />} label="Phone" value={profile.phone} />
-                <InfoRow icon={<MapPin className="text-purple-600" />} label="Address" value={profile.address} />
-              </div>
+              <InfoRow icon={<Mail className="text-blue-600" />} label="Email" value={profile.email || user?.email} />
+              <InfoRow icon={<Phone className="text-green-600" />} label="Phone" value={profile.phone} />
+              <InfoRow icon={<MapPin className="text-purple-600" />} label="Address" value={profile.address} />
             </div>
 
-            <div>
-              <h3 className="text-lg font-semibold border-b pb-2">Location Details</h3>
-              <div className="space-y-3">
-                <SimpleRow label="City" value={profile.location?.city} />
-                <SimpleRow label="State" value={profile.location?.state} />
-                <SimpleRow
-                  label="Coordinates"
-                  value={profile.location?.coordinates?.coordinates?.join(", ") || "Not provided"}
-                />
-              </div>
+            <div className="space-y-3">
+              <h3 className="text-lg font-semibold mb-4 border-b pb-2">Location Details</h3>
+              <InfoRow icon={<MapPin className="text-red-500" />} label="City" value={profile.location?.city} />
+              <InfoRow icon={<Map className="text-yellow-500" />} label="State" value={profile.location?.state} />
+              <InfoRow icon={<Navigation className="text-blue-500" />} label="Coordinates" value={profile.location?.coordinates?.coordinates?.join(", ") || "Not provided"} />
             </div>
+
 
             <div className="space-y-6">
               <div>
@@ -285,7 +288,7 @@ const BuyerProfile = () => {
         </div>
       </div>
       <div className="text-center mb-8">
-        <p className="text-gray-600">Manage your profile information and preferences</p>
+        <p className="text-gray-600">Manage your profile information.</p>
       </div>
     </div>
   )
@@ -310,3 +313,20 @@ const SimpleRow = ({ label, value }) => (
 )
 
 export default BuyerProfile
+
+
+{/* <div className="bg-white shadow-md rounded-lg overflow-hidden mb-2">
+          <div className="bg-gradient-to-r from-green-600 to-blue-600 text-white text-center p-6">
+            <div className="flex flex-rows gap-4 justify-center items-center">
+              <div className="border-4 border-red-600 w-24 h-24 bg-white/30 rounded-full flex items-center justify-center mb-4 mr-4">
+              <User className="h-20 w-20 text-white" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-black"> Mr. {profile.name || user?.name}</h2>
+                <p className="text-sm flex items-center justify-center gap-1 mt-1 text-green-100">
+                  <CheckCircle className="h-4 w-4" />
+                  Verified Buyer
+                </p>
+              </div>
+            </div>
+          </div> */}

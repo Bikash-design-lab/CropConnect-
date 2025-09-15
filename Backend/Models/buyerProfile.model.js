@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const BuyerProfileSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  profileImage: { type: String, default: null },
   phone: { type: String, required: true },
   address: { type: String, required: true },
   preferences: { type: [String], required: true }, // e.g., ["Organic", "Local"]
