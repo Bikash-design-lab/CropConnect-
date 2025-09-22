@@ -14,12 +14,15 @@ const ProfileImage = () => {
     try {
       setLoading(true);
       const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "CropConnect_Profile_Image");
-      formData.append("cloud_name", "doavbw5k7");
+      formData.append("image", file);  // Changed to match backend expectation
 
-      const res = await fetch("https://api.cloudinary.com/v1_1/doavbw5k7/image/upload", {
+      // Send to our backend instead of directly to Cloudinary
+      const token = localStorage.getItem("cropconnect_token");
+      const res = await fetch(`${import.meta.env.VITE_BASE_API_URL}/profileImg/set-profile-image`, {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: formData,
       });
 
@@ -28,18 +31,14 @@ const ProfileImage = () => {
       setImage(imageUrl);
 
       // Now send the URL to your backend to save in MongoDB
-      const token = localStorage.getItem("cropconnect_token");
-      const saveRes = await fetch(`${import.meta.env.VITE_BASE_API_URL}/farmerProfile/update-profile-image`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          userId: user._id,
-          profileImage: imageUrl,
-        }),
-      });
+      // Use the image URL from the response
+      const { optimizedUrl } = await res.json();
+
+      if (!res.ok) {
+        throw new Error('Failed to upload image');
+      }
+
+      setImage(optimizedUrl);
 
       const saveData = await saveRes.json();
       if (!saveRes.ok) throw new Error(saveData.message);
@@ -79,10 +78,10 @@ export default ProfileImage;
 //     const[image, setImage] = useState(null)
 //     const handleFileUploaded = async(e)=>{
 //         // e.preventDefault()
-//         // file is a fixed keyword in clodinary, allow to send file only 
-//         const file = e.target.files[0] ; 
-//         if(!file) return ; 
-//         // since the images is save in binary data so we can't directally send it to node.js, we need to use backend server node.js and cloudinary 
+//         // file is a fixed keyword in clodinary, allow to send file only
+//         const file = e.target.files[0] ;
+//         if(!file) return ;
+//         // since the images is save in binary data so we can't directally send it to node.js, we need to use backend server node.js and cloudinary
 //         const data= new FormData() // constructor function
 //         data.append("file",file) // data will be store in key-value pair
 //         data.append("upload_preset","CropConnect_Profile_Image")
@@ -109,7 +108,7 @@ export default ProfileImage;
 //             </div>
 //             <input type="file" className='file-input' onChange={handleFileUploaded} />
 //         </div>
-//         <div className='w-48 h-48 border-black '  >        
+//         <div className='w-48 h-48 border-black '  >
 //             <img src={image} alt="imagr" />
 //         </div>
 //       </div>

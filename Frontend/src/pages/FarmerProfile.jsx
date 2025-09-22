@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react"
-import { User, Phone, Mail, MapPin, Shield, Leaf, FileText, AlertCircle, CheckCircle, Edit3, Plus } from "lucide-react"
+import { GeorgianLari, BanknoteArrowDown, BanknoteArrowUp, CalendarSync, Building, Waypoints, Tractor, Phone, Mail, MapPin, Shield, Leaf, FileText, AlertCircle, CheckCircle, Edit3, Plus } from "lucide-react"
 import { useAuth } from "../hooks/useAuth"
 import { useNavigate } from "react-router-dom"
 import FarmerNavbar from "../components/farmer/FarmerNavbar"
@@ -107,7 +107,7 @@ const FarmerProfile = () => {
 
               {/* Location */}
               <div>
-                <div className="h-5 bg-gray-300 w-1/3 mb-4 rounded" />
+                <div className="h-5 bg-gray-300 w-1/3 mb-4 rounded " />
                 <div className="space-y-3">
                   {[1, 2, 3].map((i) => (
                     <div key={i} className="bg-gray-50 p-3 rounded">
@@ -221,44 +221,25 @@ const FarmerProfile = () => {
               <div className="space-y-3">
                 <InfoRow icon={<Mail className="text-blue-600" />} label="Email" value={profile.email || user?.email} />
                 <InfoRow icon={<Phone className="text-green-600" />} label="Phone" value={profile.phone || user?.phone} />
-                <InfoRow icon={<MapPin className="text-purple-600" />} label="Farm Size" value={profile.farmSize ? `${profile.farmSize} acres` : "Not provided"} />
+                <InfoRow icon={<Tractor className="text-purple-600" />} label="Farm Size" value={profile.farmSize ? `${profile.farmSize} acres` : "Not provided"} />
               </div>
             </div>
 
             <div>
               <h3 className="text-lg font-semibold border-b pb-2">Location Details</h3>
-              <div className="space-y-3">
-                <SimpleRow label="City" value={profile.location?.city} />
-                <SimpleRow label="State" value={profile.location?.state} />
-                <SimpleRow
-                  label="Coordinates"
-                  value={profile.location?.coordinates?.coordinates?.join(", ") || "Not provided"}
-                />
+              <div className="space-y-3 mt-5">
+
+                <InfoRow icon={<Waypoints className="text-gray-600" />} label="City" value={profile.location?.city || "Not provided"} />
+
+                <InfoRow icon={<Building className="text-yellow-600" />} label="State" value={profile.location?.state || "Not provided"} />
+
+                <InfoRow icon={<MapPin className="text-orange-600" />} label="Coordinates" value={profile.location?.coordinates?.coordinates?.join(", ") || "Not provided"} />
+
+
               </div>
             </div>
 
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 border-b pb-2">
-                  <Leaf className="text-green-500 h-5 w-5" />
-                  Crop Information
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {profile.crops?.length > 0 ? (
-                    profile.crops.map((crop, i) => (
-                      <span
-                        key={i}
-                        className="bg-green-100 text-green-800 text-sm px-3 py-1 rounded-full border border-green-300"
-                      >
-                        {crop}
-                      </span>
-                    ))
-                  ) : (
-                    <p className="text-gray-500 italic">No crops listed</p>
-                  )}
-                </div>
-              </div>
-
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {profile.certificationDetails && (
                 <div>
                   <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 border-b pb-2">
@@ -266,11 +247,12 @@ const FarmerProfile = () => {
                     Certification Details
                   </h3>
                   <div className="space-y-3">
-                    <SimpleRow label="Authority" value={profile.certificationDetails.authority} />
-                    <SimpleRow
-                      label="Certified On"
-                      value={profile.certificationDetails.certifiedOn ? new Date(profile.certificationDetails.certifiedOn).toLocaleDateString() : "Not provided"}
+                    {/* GeorgianLari */}
+                    <InfoRow icon={<GeorgianLari className="text-orange-600" />} label="Authority" value={profile.certificationDetails.authority || "Not provided"} />
+
+                    <InfoRow icon={<CalendarSync className="text-green-600" />} label="Certificate issue on" value={profile.certificationDetails.certifiedOn ? new Date(profile.certificationDetails.certifiedOn).toLocaleDateString() : "Not provided"}
                     />
+
                     {profile.certificationDetails.documents?.length > 0 && (
                       <div>
                         <p className="text-sm text-gray-600 mb-1 flex items-center gap-1">
@@ -291,19 +273,26 @@ const FarmerProfile = () => {
                 </div>
               )}
 
-              <div>
-                <h4 className="font-semibold text-gray-900 mb-3 border-b pb-2">Account Status</h4>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-green-500" />
-                  <span className="text-green-700 font-medium">Active & Verified</span>
-                </div>
-              </div>
+              <div className=" text-center">
+                <h4 className="text-lg font-semibold border-b pb-2">Member details</h4>
+                <div class="bg-gray-50 mb-6 mt-5">
+                  {/* BanknoteArrowDown  BanknoteArrowUp */}
 
-              <div>
-                <h4 className="font-semibold text-gray-900 mb-3 border-b pb-2">Member Since</h4>
-                <p className="text-gray-600">
-                  {profile.createdAt ? new Date(profile.createdAt).toLocaleDateString() : "N/A"}
-                </p>
+
+                  <div className="flex justify-ceter gap-4">
+                    <BanknoteArrowDown />
+                    <p className="pb-2"> Profile created</p>
+                  </div>
+                  <p className="font-bold text-black">
+                    {profile.createdAt ? new Date(profile.createdAt).toLocaleDateString() : "N/A"}
+                  </p>
+                </div>
+                <div className="flex justify-ceter gap-4">
+                  <BanknoteArrowUp />
+                  <p> Last profile update</p>
+                </div>
+                <p className="font-bold text-black"> {profile.updatedAt ? new Date(profile.updatedAt).toLocaleDateString() : "N/A"}</p>
+
               </div>
             </div>
           </div>

@@ -10,11 +10,24 @@ const { FarmerProfileModel } = require("../Models/farmerProfile.model")
 const { Authentication } = require("../Middlewares/auth.middleware");
 
 // Cloudinary config 
-cloudinary.config({
+const cloudinaryConfig = {
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
-});
+};
+
+// Validate Cloudinary configuration
+if (!cloudinaryConfig.cloud_name || !cloudinaryConfig.api_key || !cloudinaryConfig.api_secret) {
+    console.error('Missing Cloudinary configuration. Please check environment variables:',
+        {
+            cloud_name: !!cloudinaryConfig.cloud_name,
+            api_key: !!cloudinaryConfig.api_key,
+            api_secret: !!cloudinaryConfig.api_secret
+        }
+    );
+}
+
+cloudinary.config(cloudinaryConfig);
 
 // Middleware to serve HTML file
 profileImgRoute.use(express.static(path.join(__dirname)));

@@ -42,6 +42,7 @@ const BuyerProfile = () => {
         })
 
         const data = await res.json()
+        setProfile(data?.profileImage ? "null" : data.profileImage)
         if (!res.ok) throw new Error(data.message || "Failed to fetch profile")
         const buyer = data.getBuyerProfile?.find((p) => p.userId === user._id)
           || data.data || data.profile || null
