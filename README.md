@@ -31,7 +31,7 @@ A secure, real-time agricultural marketplace connecting farmers and buyers, feat
 - 🌽 **Add Crops** to the marketplace with images, descriptions, and pricing
 - 🔍 **Product Filtering & Sorting** by name, price, category, etc.
 - ⏱️ **Rate Limiter** – max 25 requests per 15 minutes for enhanced security
-
+- 🤳 **Cloudinary** - Profile image handling made easy with Multer + Cloudinary.
 ---
 
 ## 🧱 Tech Stack
@@ -52,7 +52,7 @@ A secure, real-time agricultural marketplace connecting farmers and buyers, feat
 - **Axios**
 - **Rate Limiting Middleware**
   
-<img width="1906" height="863" alt="Screenshot 2025-07-15 232752" src="https://github.com/user-attachments/assets/0b3747fe-daa3-4ab5-8005-737f2ceb3ef6" />
+<img width="19<img width="1147" height="859" alt="Screenshot 2025-09-14 232752" src="https://github.com/user-attachments/assets/ed163eec-a062-4758-98ff-d356ded9cf8b" />
 
 <img width="1919" height="868" alt="Screenshot 2025-07-15 232838" src="https://github.com/user-attachments/assets/a59a393f-c871-47a9-947a-923280f27f56" />
 
