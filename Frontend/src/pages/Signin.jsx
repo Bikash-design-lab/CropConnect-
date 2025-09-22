@@ -72,7 +72,7 @@ const Signin = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh]">
+    <div className="flex flex-col items-center justify-center min-h-[60vh] mt-4">
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-2">
           Welcome Back
@@ -130,6 +130,7 @@ const Signin = () => {
             Forgot Password?
           </a>
         </div>
+        <p className="mt-4 text-center">Don’t have an account?<b className="text-blue-500 cursor-pointer" onClick={() => navigate("/signup")}> Register now </b> </p>
       </form>
       <div className="flex gap-4">
         <button

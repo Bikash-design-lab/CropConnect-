@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from "../hooks/useAuth"
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from "../hooks/useAuth";
+
 const Navbar = () => {
   const { user, logout, loading } = useAuth();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const linkClasses = ({ isActive }) =>
+    isActive
+      ? "text-white underline decoration-blue-500"
+      : "text-white hover:underline hover:decoration-blue-500 transition-colors";
 
   const handleLogout = async () => {
     await logout();
@@ -27,11 +33,13 @@ const Navbar = () => {
           <span className="text-white">Connect</span>
         </Link>
 
+        {/* Hamburger for mobile */}
         <div className="md:hidden">
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="focus:outline-none"
             aria-label="Toggle menu"
+            aria-expanded={menuOpen}
           >
             <svg
               className="w-7 h-7"
@@ -54,6 +62,7 @@ const Navbar = () => {
           </button>
         </div>
 
+        {/* Menu Items */}
         <div
           className={`flex-col md:flex-row md:flex items-center gap-4 font-medium transition-all duration-300 ${menuOpen
             ? 'flex bg-[var(--color-primary)] absolute top-16 left-0 w-full p-4 shadow-xl'
@@ -62,37 +71,43 @@ const Navbar = () => {
         >
           {!user && (
             <>
-              <Link to="/signin" onClick={closeMenu} className="text-white hover:underline hover:decoration-blue-500 transition-colors">
+              <NavLink to="/signin" onClick={closeMenu} className={linkClasses}>
                 Sign In
-              </Link>
-              <Link to="/signup" onClick={closeMenu} className="text-white hover:underline hover:decoration-blue-500 transition-colors">
-                Sign Up
-              </Link>
-              <Link to="/contact-us" onClick={closeMenu} className="text-white hover:underline hover:decoration-blue-500 transition-colors">
+              </NavLink>
+              <NavLink to="/signup" onClick={closeMenu} className={linkClasses}>
+                Register
+              </NavLink>
+              <NavLink to="/contact-us" onClick={closeMenu} className={linkClasses}>
                 Contact Us
-              </Link>
+              </NavLink>
             </>
           )}
 
           {user?.role === 'farmer' && (
             <>
-              <Link to="/dashboard/farmer" onClick={closeMenu} className="text-white hover:underline hover:decoration-blue-500 transition-colors">
+              <NavLink to="/dashboard/farmer" onClick={closeMenu} className={linkClasses}>
                 Farmer Dashboard
-              </Link>
-              <Link to="/profile/farmer" onClick={closeMenu} className="text-white hover:underline hover:decoration-blue-500 transition-colors">
+              </NavLink>
+              <NavLink to="/profile/farmer" onClick={closeMenu} className={linkClasses}>
                 My Profile
-              </Link>
+              </NavLink>
+              <NavLink to="/contact-us" onClick={closeMenu} className={linkClasses}>
+                Contact Us
+              </NavLink>
             </>
           )}
 
           {user?.role === 'buyer' && (
             <>
-              <Link to="/dashboard/buyer" onClick={closeMenu} className="text-white hover:underline hover:decoration-blue-500 transition-colors">
+              <NavLink to="/dashboard/buyer" onClick={closeMenu} className={linkClasses}>
                 Buyer Dashboard
-              </Link>
-              <Link to="/profile/buyer" onClick={closeMenu} className="text-white hover:underline hover:decoration-blue-500 transition-colors">
+              </NavLink>
+              <NavLink to="/profile/buyer" onClick={closeMenu} className={linkClasses}>
                 My Profile
-              </Link>
+              </NavLink>
+              <NavLink to="/contact-us" onClick={closeMenu} className={linkClasses}>
+                Contact Us
+              </NavLink>
             </>
           )}
 
@@ -112,4 +127,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

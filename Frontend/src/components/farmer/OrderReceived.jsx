@@ -169,7 +169,7 @@ const OrderReceived = () => {
                 <div className="min-h-[60vh] flex items-center justify-center">
                     <div className="text-center">
                         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
-                        <p className="text-gray-600 font-medium">Loading buyer requests...</p>
+                        <p className="text-gray-600 font-medium">Loading order requests...</p>
                     </div>
                 </div>
             </div>
@@ -209,7 +209,7 @@ const OrderReceived = () => {
     return (
         <div className="min-h-screen bg-gray-50 mt-4">
             <FarmerNavbar />
-            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8 ">
+            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8  ">
                 {/* Header */}
                 <div className="">
                     <h1 className="text-3xl font-extrabold text-gray-900 ">

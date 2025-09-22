@@ -19,7 +19,7 @@ const rateLimit = require("express-rate-limit");
 
 const limiter = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes
-  max: 75, // Limit each IP to 25 requests per windowMs
+  max: 75, // Limit each IP to 75 requests per windowMs
   standardHeaders: 'draft-8',
   legacyHeaders: false,
 });

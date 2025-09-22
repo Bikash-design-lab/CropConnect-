@@ -239,7 +239,7 @@ const Home = () => {
             <ul className="grid grid-cols-2 text-sm ">
               <li><Link to="/SeasonalGuide" className="hover:underline">Crop Calendar</Link></li>
               <li><Link to="/FarmLaw" className="hover:underline">Farmer Laws</Link></li>
-              <li><Link to="/weather" className="hover:underline">Weather Updates</Link></li>
+              <li><Link to="/weather" className="hover:underline">Weathercast</Link></li>
               <li><Link to="/signup" className="hover:underline">Register</Link></li>
             </ul>
           </div>

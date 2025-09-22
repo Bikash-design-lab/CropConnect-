@@ -227,7 +227,7 @@ const FarmerProfile = () => {
 
             <div>
               <h3 className="text-lg font-semibold border-b pb-2">Location Details</h3>
-              <div className="space-y-3 mt-5">
+              <div className="space-y-3 mt-5 ">
 
                 <InfoRow icon={<Waypoints className="text-gray-600" />} label="City" value={profile.location?.city || "Not provided"} />
 
@@ -244,7 +244,7 @@ const FarmerProfile = () => {
                 <div>
                   <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 border-b pb-2">
                     <Shield className="text-blue-500 h-5 w-5" />
-                    Certification Details
+                    Certification
                   </h3>
                   <div className="space-y-3">
                     {/* GeorgianLari */}
@@ -274,7 +274,7 @@ const FarmerProfile = () => {
               )}
 
               <div className=" text-center">
-                <h4 className="text-lg font-semibold border-b pb-2">Member details</h4>
+                <h4 className="text-lg font-semibold border-b pb-2">Member </h4>
                 <div class="bg-gray-50 mb-6 mt-5">
                   {/* BanknoteArrowDown  BanknoteArrowUp */}
 
@@ -294,6 +294,7 @@ const FarmerProfile = () => {
                 <p className="font-bold text-black"> {profile.updatedAt ? new Date(profile.updatedAt).toLocaleDateString() : "N/A"}</p>
 
               </div>
+
             </div>
           </div>
 
