@@ -42,7 +42,7 @@ A secure, real-time agricultural marketplace connecting farmers and buyers, feat
 
 ## Databse
 - **Mongodb**
-
+- ""Cloudinary**
 ### 🖥️ Backend
 - **Node.js**
 - **Express.js**
@@ -51,8 +51,13 @@ A secure, real-time agricultural marketplace connecting farmers and buyers, feat
 - **NodeMailer**
 - **Axios**
 - **Rate Limiting Middleware**
+
+## Visualize the Process: Working Flow of CropConnect
   
-<img width="19<img width="1147" height="859" alt="Screenshot 2025-09-14 232752" src="https://github.com/user-attachments/assets/ed163eec-a062-4758-98ff-d356ded9cf8b" />
+<img width="2983" height="1256" alt="diagram-export-29-09-2025-12_14_15" src="https://github.com/user-attachments/assets/e4063ec9-fe8c-46d0-9ef2-5898317a5ba3" />
+
+--- 
+<img width="1147" height="859" alt="Screenshot 2025-09-14 232752" src="https://github.com/user-attachments/assets/ed163eec-a062-4758-98ff-d356ded9cf8b" />
 
 <img width="1919" height="868" alt="Screenshot 2025-07-15 232838" src="https://github.com/user-attachments/assets/a59a393f-c871-47a9-947a-923280f27f56" />
 
